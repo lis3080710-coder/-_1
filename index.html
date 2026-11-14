@@ -29,7 +29,7 @@
   --earth:     #B8903C;
   --metal:     #9A8A72;
   --water:     #4A6B8A;
-  --r:         6px;
+  --r:         12px;
   --accent-soft: rgba(0,161,255,.12);
   --serif:     'Noto Serif KR', Georgia, serif;
   --sans:      'Noto Sans KR', system-ui, sans-serif;
@@ -138,13 +138,13 @@ p { max-width: 66ch; color: var(--fg-2); }
 }
 .btn:hover { border-color: var(--accent); color: var(--accent-text); }
 .btn:disabled { opacity: .6; cursor: progress; }
-.btn.fill:hover { color: #04101C; }
+.btn.fill:hover { color: #fff; }
 .gps-status { font-size: 13px; margin-top: 7px; max-width: none; color: var(--fg-3); }
 .gps-status.ok  { color: var(--accent-text); }
 .gps-status.err { color: #C43D2E; }
 .btn.fill {
   background: var(--accent); border-color: var(--accent);
-  color: #04101C; font-weight: 600;
+  color: #fff; font-weight: 600;
 }
 .btn.fill:hover { background: var(--accent-h); border-color: var(--accent-h); }
 
@@ -164,6 +164,12 @@ p { max-width: 66ch; color: var(--fg-2); }
 }
 .ph.tall { min-height: 380px; }
 .ph.sq   { min-height: 100px; }
+
+.ill { border-radius: var(--r); overflow: hidden; background: var(--bg-raised); }
+.ill[style*="height:1"] { background: #E6F5FF; }
+.ill svg { display: block; width: 100%; height: 100%; }
+.logo { display: inline-flex; align-items: center; gap: 8px; }
+.logo svg { width: 26px; height: 26px; flex-shrink: 0; }
 
 /* ── Box / card ── */
 .box {
@@ -273,6 +279,28 @@ details > div { padding: 22px; border-top: 1px solid var(--line); }
 footer { padding: 44px 0; border-top: 1px solid var(--line); }
 footer p { font-size: 13px; color: var(--fg-3); max-width: none; line-height: 2; }
 
+.footer-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.fb-item { display: inline-flex; align-items: center; gap: 7px; font-size: 18px; color: var(--fg); }
+.fb-item svg { width: 24px; height: 24px; }
+.fb-item b { font-weight: 700; letter-spacing: -.02em; }
+.fb-item b.serif { font-family: var(--serif); font-weight: 500; }
+.fb-x { color: var(--fg-3); font-size: 16px; }
+
+.pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; max-width: 520px; }
+.pillar { display: flex; flex-direction: column; gap: 8px; text-align: center; }
+.pl-head { font-size: 13px; color: var(--fg-2); font-weight: 500; }
+.pl-head em { color: var(--accent-text); font-style: normal; }
+.pcell { border-radius: 10px; padding: 12px 4px; display: flex; flex-direction: column; gap: 2px; border: 1px solid transparent; }
+.pcell b { font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.2; }
+.pcell span { font-size: 12px; }
+.p-wood  { background: rgba(91,122,78,.14);  color: #3E7A2C; border-color: rgba(91,122,78,.28); }
+.p-fire  { background: rgba(196,91,74,.14);  color: #BF3F32; border-color: rgba(196,91,74,.28); }
+.p-earth { background: rgba(184,144,60,.14); color: #8F6A12; border-color: rgba(184,144,60,.28); }
+.p-metal { background: rgba(154,138,114,.16);color: #7A6A52; border-color: rgba(154,138,114,.28); }
+.p-water { background: rgba(74,107,138,.14); color: #2F6A94; border-color: rgba(74,107,138,.28); }
+.p-none  { background: var(--bg-raised); color: var(--fg-3); border-color: var(--line); justify-content: center; min-height: 66px; }
+[hidden] { display: none !important; }
+
 /* ── Divider ── */
 hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
 
@@ -292,7 +320,7 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
 
 <header>
   <div class="wrap inner">
-    <a href="#" class="logo">오행<em>의집</em></a>
+    <a href="#" class="logo"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M13 2.5 C14.2 2.5 15 2.9 15.8 3.6 L22 9 C23.2 10 24 11.4 24 13 V20.5 C24 22.4 22.4 24 20.5 24 H5.5 C3.6 24 2 22.4 2 20.5 V13 C2 11.4 2.8 10 4 9 L10.2 3.6 C11 2.9 11.8 2.5 13 2.5Z" fill="#00A1FF"/><path d="M9 15.5 C9 13 11 11 13 11 C15 11 17 13 17 15.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>오행<em>의집</em></span></a>
     <nav>
       <a href="#about">서비스 소개</a>
       <a href="#how">이용 방법</a>
@@ -318,7 +346,25 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
       <a class="btn fill" href="#step1">내 사주 · 공간 분석 시작하기</a>
       <p class="hero-note">필수 입력 3가지 · 약 1분 소요 · [카피 영역]</p>
     </div>
-    <div class="ph tall">[메인 비주얼 이미지 / 영상 자리]</div>
+    <div class="ill"><svg viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+<rect width="480" height="400" fill="#E6F5FF"/>
+<circle cx="390" cy="90" r="46" fill="#fff" opacity=".7"/>
+<rect x="250" y="60" width="170" height="150" rx="10" fill="#fff" stroke="#99D9FF" stroke-width="4"/>
+<line x1="335" y1="60" x2="335" y2="210" stroke="#99D9FF" stroke-width="4"/>
+<line x1="250" y1="135" x2="420" y2="135" stroke="#99D9FF" stroke-width="4"/>
+<rect x="0" y="290" width="480" height="110" fill="#CFEAFB"/>
+<rect x="60" y="230" width="190" height="70" rx="14" fill="#00A1FF"/>
+<rect x="45" y="210" width="40" height="90" rx="14" fill="#33B4FF"/>
+<rect x="225" y="210" width="40" height="90" rx="14" fill="#33B4FF"/>
+<rect x="80" y="205" width="140" height="45" rx="12" fill="#66C6FF"/>
+<rect x="70" y="298" width="8" height="18" fill="#0F1B2D"/><rect x="232" y="298" width="8" height="18" fill="#0F1B2D"/>
+<line x1="330" y1="230" x2="330" y2="300" stroke="#0F1B2D" stroke-width="4"/>
+<path d="M300 232 L360 232 L348 190 L312 190 Z" fill="#fff" stroke="#0F1B2D" stroke-width="4" stroke-linejoin="round"/>
+<ellipse cx="330" cy="302" rx="22" ry="6" fill="#0F1B2D"/>
+<rect x="395" y="262" width="34" height="40" rx="6" fill="#fff" stroke="#99D9FF" stroke-width="3"/>
+<path d="M412 262 C390 235 396 215 412 200 C428 215 434 235 412 262Z" fill="#5B9A47"/>
+<path d="M412 262 C400 245 404 232 412 222" stroke="#3E7A2C" stroke-width="3" fill="none"/>
+<circle cx="70" cy="60" r="12" fill="#5B9A47"/><circle cx="105" cy="60" r="12" fill="#E2594A"/><circle cx="140" cy="60" r="12" fill="#E0A93B"/><circle cx="175" cy="60" r="12" fill="#B7A88F"/><circle cx="210" cy="60" r="12" fill="#4F8FC0"/></svg></div>
   </div>
 </section>
 
@@ -329,21 +375,27 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
     <p style="margin-bottom:44px;">타고난 오행의 균형과 거주 공간의 환경(위치·채광·방향·구조)을 결합해 개인과 공간의 조화를 분석합니다.</p>
     <div class="grid3">
       <div class="about-card">
-        <div class="ph sq">[이미지]</div>
+        <div class="ill" style="height:100px"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><rect width="200" height="100" fill="#E6F5FF"/><g transform="translate(100 56) scale(.82) translate(-100 -50)"><line x1="100" y1="16" x2="120" y2="78" stroke="#99D9FF" stroke-width="2"/><line x1="132" y1="39" x2="80" y2="78" stroke="#99D9FF" stroke-width="2"/><line x1="120" y1="78" x2="68" y2="39" stroke="#99D9FF" stroke-width="2"/><line x1="80" y1="78" x2="100" y2="16" stroke="#99D9FF" stroke-width="2"/><line x1="68" y1="39" x2="132" y2="39" stroke="#99D9FF" stroke-width="2"/><circle cx="100" cy="16" r="10" fill="#5B9A47"/><circle cx="132" cy="39" r="10" fill="#E2594A"/><circle cx="120" cy="78" r="10" fill="#E0A93B"/><circle cx="80" cy="78" r="10" fill="#B7A88F"/><circle cx="68" cy="39" r="10" fill="#4F8FC0"/></g></svg></div>
         <div>
           <h3>나의 사주</h3>
           <p>오행(목·화·토·금·수)의 균형으로 타고난 성향과 부족한 기운을 확인해요.</p>
         </div>
       </div>
       <div class="about-card">
-        <div class="ph sq">[이미지]</div>
+        <div class="ill" style="height:100px"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><rect width="200" height="100" fill="#E6F5FF"/>
+<circle cx="150" cy="28" r="12" fill="#fff"/>
+<path d="M60 52 L100 20 L140 52 V84 H60Z" fill="#fff" stroke="#00A1FF" stroke-width="4" stroke-linejoin="round"/>
+<rect x="88" y="56" width="24" height="28" fill="#00A1FF"/><rect x="68" y="56" width="14" height="14" fill="#99D9FF"/><rect x="118" y="56" width="14" height="14" fill="#99D9FF"/></svg></div>
         <div>
           <h3>내 공간</h3>
           <p>거주 위치, 채광, 방향 등 공간 환경을 함께 고려해요.</p>
         </div>
       </div>
       <div class="about-card">
-        <div class="ph sq">[이미지]</div>
+        <div class="ill" style="height:100px"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><rect width="200" height="100" fill="#E6F5FF"/>
+<rect x="40" y="52" width="90" height="28" rx="8" fill="#00A1FF"/><rect x="32" y="44" width="22" height="36" rx="8" fill="#33B4FF"/><rect x="116" y="44" width="22" height="36" rx="8" fill="#33B4FF"/>
+<line x1="165" y1="50" x2="165" y2="82" stroke="#0F1B2D" stroke-width="3"/><path d="M152 52 L178 52 L172 30 L158 30Z" fill="#fff" stroke="#0F1B2D" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="148" cy="22" r="12" fill="#00A1FF"/><path d="M142 22 l4 4 l8 -9" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div>
           <h3>맞춤 추천</h3>
           <p>부족한 기운을 채우는 색상·소재·형태, 오늘의집 상품까지 연결해요.</p>
@@ -361,17 +413,17 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
       <div class="box">
         <span class="step-label">Step 01</span>
         <h3>사주 정보 &amp; 거주 위치 입력</h3>
-        <div class="ph sq" style="margin-top:14px;">[화면 캡처]</div>
+        <div class="ill" style="margin-top:14px;height:100px"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><rect width="200" height="100" fill="#E6F5FF"/><rect x="50" y="8" width="100" height="84" rx="8" fill="#fff" stroke="#99D9FF" stroke-width="2"/><rect x="62" y="20" width="76" height="10" rx="3" fill="#E6F5FF" stroke="#99D9FF"/><rect x="62" y="36" width="76" height="10" rx="3" fill="#E6F5FF" stroke="#99D9FF"/><rect x="62" y="52" width="48" height="10" rx="3" fill="#E6F5FF" stroke="#99D9FF"/><rect x="62" y="70" width="76" height="14" rx="4" fill="#00A1FF"/></svg></div>
       </div>
       <div class="box">
         <span class="step-label">Step 02</span>
         <h3>사주 분석 결과 확인</h3>
-        <div class="ph sq" style="margin-top:14px;">[화면 캡처]</div>
+        <div class="ill" style="margin-top:14px;height:100px"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><rect width="200" height="100" fill="#E6F5FF"/><rect x="50" y="8" width="100" height="84" rx="8" fill="#fff" stroke="#99D9FF" stroke-width="2"/><rect x="76" y="20" width="62" height="7" rx="3" fill="#E6F5FF"/><rect x="76" y="20" width="44" height="7" rx="3" fill="#5B9A47"/><circle cx="66" cy="23.5" r="4" fill="#5B9A47"/><rect x="76" y="33" width="62" height="7" rx="3" fill="#E6F5FF"/><rect x="76" y="33" width="34" height="7" rx="3" fill="#E2594A"/><circle cx="66" cy="36.5" r="4" fill="#E2594A"/><rect x="76" y="46" width="62" height="7" rx="3" fill="#E6F5FF"/><rect x="76" y="46" width="25" height="7" rx="3" fill="#E0A93B"/><circle cx="66" cy="49.5" r="4" fill="#E0A93B"/><rect x="76" y="59" width="62" height="7" rx="3" fill="#E6F5FF"/><rect x="76" y="59" width="9" height="7" rx="3" fill="#B7A88F"/><circle cx="66" cy="62.5" r="4" fill="#B7A88F"/><rect x="76" y="72" width="62" height="7" rx="3" fill="#E6F5FF"/><rect x="76" y="72" width="37" height="7" rx="3" fill="#4F8FC0"/><circle cx="66" cy="75.5" r="4" fill="#4F8FC0"/></svg></div>
       </div>
       <div class="box">
         <span class="step-label">Step 03</span>
         <h3>보완 인테리어 제안 &amp; 상품 추천</h3>
-        <div class="ph sq" style="margin-top:14px;">[화면 캡처]</div>
+        <div class="ill" style="margin-top:14px;height:100px"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><rect width="200" height="100" fill="#E6F5FF"/><rect x="50" y="8" width="100" height="84" rx="8" fill="#fff" stroke="#99D9FF" stroke-width="2"/><rect x="60" y="18" width="38" height="34" rx="5" fill="#E6F5FF"/><rect x="102" y="18" width="38" height="34" rx="5" fill="#E6F5FF"/><rect x="60" y="58" width="22" height="5" rx="2" fill="#99D9FF"/><rect x="102" y="58" width="22" height="5" rx="2" fill="#99D9FF"/><rect x="60" y="70" width="80" height="14" rx="4" fill="#00A1FF"/></svg></div>
       </div>
     </div>
   </div>
@@ -382,22 +434,23 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
   <div class="wrap">
     <span class="step-label">Step 01</span>
     <h2>사주 정보 &amp; 거주 위치 입력</h2>
-    <form class="box" style="margin-top:32px; max-width:580px;" onsubmit="return false;">
+    <form class="box" id="saju-form" style="margin-top:32px; max-width:580px;" novalidate>
       <label>생년월일 <span class="label-opt">(필수)</span></label>
       <div class="row">
         <div style="flex:1; min-width:160px;">
-          <input type="text" placeholder="YYYY-MM-DD">
+          <input type="text" id="birth-date" inputmode="numeric" autocomplete="bday" placeholder="YYYY-MM-DD">
         </div>
         <div class="radio-group">
-          <label class="radio-label"><input type="radio" name="cal" checked> 양력</label>
-          <label class="radio-label"><input type="radio" name="cal"> 음력</label>
+          <label class="radio-label"><input type="radio" name="cal" value="solar" checked> 양력</label>
+          <label class="radio-label"><input type="radio" name="cal" value="lunar"> 음력</label>
+          <label class="radio-label" id="leap-wrap" style="display:none;"><input type="checkbox" id="leap"> 윤달</label>
         </div>
       </div>
 
       <label>성별 <span class="label-opt">(필수)</span></label>
       <div class="radio-group">
-        <label class="radio-label"><input type="radio" name="sex"> 여성</label>
-        <label class="radio-label"><input type="radio" name="sex"> 남성</label>
+        <label class="radio-label"><input type="radio" name="sex" value="f"> 여성</label>
+        <label class="radio-label"><input type="radio" name="sex" value="m"> 남성</label>
       </div>
 
       <label>태어난 시각 <span class="label-opt">(선택)</span></label>
@@ -431,7 +484,8 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
       <p class="gps-status" id="gps-status" role="status" aria-live="polite"></p>
 
       <div style="margin-top:28px;">
-        <a class="btn fill" href="#step2">분석하기</a>
+        <button type="submit" class="btn fill">분석하기</button>
+        <p class="gps-status" id="form-status" role="status" aria-live="polite"></p>
       </div>
     </form>
   </div>
@@ -442,41 +496,30 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
   <div class="wrap">
     <span class="step-label">Step 02</span>
     <h2>사주 분석 결과</h2>
-    <p class="note" style="margin-bottom:36px;">※ 아래는 결과 화면 예시 (샘플 데이터)</p>
+    <p class="note" id="result-note" style="margin-bottom:36px;">※ 아래는 결과 화면 예시 (샘플 데이터) — 위에서 정보를 입력하고 &lsquo;분석하기&rsquo;를 눌러 보세요.</p>
+    <div class="box" id="pillars-box" hidden style="margin-bottom:20px;">
+      <h3>나의 사주 원국</h3>
+      <div class="pillars" id="pillars"></div>
+      <p class="note" id="pillar-note" style="margin-top:14px;"></p>
+    </div>
     <div class="grid2" style="align-items:start; gap:20px;">
       <div class="box">
         <h3>오행별 점수</h3>
-        <div class="score-list" style="margin-top:18px;">
-          <div class="score-row">
-            <span>목(木)</span><div class="bar"><i class="bar-wood" style="width:70%"></i></div><span>70</span>
-          </div>
-          <div class="score-row">
-            <span>화(火)</span><div class="bar"><i class="bar-fire" style="width:55%"></i></div><span>55</span>
-          </div>
-          <div class="score-row">
-            <span>토(土)</span><div class="bar"><i class="bar-earth" style="width:40%"></i></div><span>40</span>
-          </div>
-          <div class="score-row">
-            <span>금(金)</span><div class="bar"><i class="bar-metal" style="width:15%"></i></div><span>15</span>
-          </div>
-          <div class="score-row">
-            <span>수(水)</span><div class="bar"><i class="bar-water" style="width:60%"></i></div><span>60</span>
-          </div>
-        </div>
-        <div class="ph sq" style="margin-top:22px;">[오행 차트 자리]</div>
+        <div class="score-list" id="score-list" style="margin-top:18px;"></div>
+        <div class="ill" id="radar" style="margin-top:22px;height:220px"></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:16px;">
         <div class="box">
           <h3>사주 해석 한 줄</h3>
-          <p style="margin-top:10px; font-size:15px; color:var(--fg);">추진력은 강하지만 마음을 단단히 잡아줄 기운이 부족한 사주예요.</p>
+          <p id="reading" style="margin-top:10px; font-size:15px; color:var(--fg);">추진력은 강하지만 마음을 단단히 잡아줄 기운이 부족한 사주예요.</p>
         </div>
         <div class="box">
           <h3>부족한 오행</h3>
-          <div style="display:flex; align-items:center; gap:10px; margin-top:12px;">
-            <span class="chip chip-metal" style="font-size:14px; padding:5px 14px;">금(金)</span>
-            <span style="font-size:14px; color:var(--fg-2);">보완이 필요해요.</span>
+          <div style="display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap;">
+            <span id="lack-chips"><span class="chip chip-metal" style="font-size:14px; padding:5px 14px;">금(金)</span></span>
+            <span id="lack-text" style="font-size:14px; color:var(--fg-2);">보완이 필요해요.</span>
           </div>
-          <p class="note" style="margin-top:14px;">+ 거주 위치(도시), 채광·방향 기반 공간 코멘트 [자리]</p>
+          <p class="note" id="space-note" style="margin-top:14px;">거주 위치와 방향을 반영한 공간 코멘트가 여기에 표시돼요.</p>
         </div>
       </div>
     </div>
@@ -494,10 +537,10 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
       <summary>보완 방향 — 색상 · 소재 · 형태 · 공간 스타일</summary>
       <div class="grid2">
         <ul style="color:var(--fg-2); font-size:14px; line-height:2.1; padding-left:20px;">
-          <li>색상: [예: 화이트, 실버 계열]</li>
-          <li>소재: [예: 금속, 유리]</li>
-          <li>형태: [예: 원형, 직선형]</li>
-          <li>공간 스타일: [예: 모던 미니멀]</li>
+          <li id="rec-color">색상: 화이트, 실버, 골드</li>
+          <li id="rec-material">소재: 금속, 유리, 스톤</li>
+          <li id="rec-shape">형태: 원형, 매끈하고 둥근 형태</li>
+          <li id="rec-style">공간 스타일: 모던 미니멀</li>
         </ul>
         <div class="ph sq">[무드보드 이미지]</div>
       </div>
@@ -553,7 +596,10 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
       <div class="box">
         <h3>핵심 타깃</h3>
         <p style="margin-top:8px; font-size:15px;">사주에 관심 많은 2030 1인 가구, 오늘의집 사용자</p>
-        <div class="ph sq" style="margin-top:18px;">[페르소나 이미지]</div>
+        <div class="ill" style="margin-top:18px;height:130px"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><rect width="200" height="100" fill="#E6F5FF"/>
+<path d="M70 82 L100 56 L130 82Z" fill="#fff" stroke="#00A1FF" stroke-width="3" stroke-linejoin="round"/><rect x="72" y="82" width="56" height="12" fill="#00A1FF"/>
+<circle cx="100" cy="30" r="13" fill="#00A1FF"/><path d="M78 56 C78 42 122 42 122 56Z" fill="#33B4FF"/>
+<circle cx="150" cy="28" r="9" fill="#4F8FC0"/><circle cx="50" cy="28" r="9" fill="#B7A88F"/></svg></div>
       </div>
       <div class="box">
         <h3>이럴 때도 좋아요</h3>
@@ -562,7 +608,10 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
           <li>결혼 준비 중일 때</li>
           <li>집들이 선물을 고민할 때</li>
         </ul>
-        <div class="ph sq" style="margin-top:18px;">[상황 이미지]</div>
+        <div class="ill" style="margin-top:18px;height:130px"><svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><rect width="200" height="100" fill="#E6F5FF"/>
+<rect x="28" y="40" width="44" height="38" rx="4" fill="#fff" stroke="#00A1FF" stroke-width="3"/><line x1="28" y1="54" x2="72" y2="54" stroke="#00A1FF" stroke-width="3"/><line x1="50" y1="40" x2="50" y2="54" stroke="#00A1FF" stroke-width="3"/>
+<rect x="84" y="30" width="44" height="48" rx="6" fill="#fff" stroke="#00A1FF" stroke-width="3"/><line x1="84" y1="44" x2="128" y2="44" stroke="#00A1FF" stroke-width="3"/><circle cx="98" cy="58" r="4" fill="#E2594A"/><circle cx="114" cy="58" r="4" fill="#E0A93B"/><circle cx="98" cy="68" r="4" fill="#5B9A47"/>
+<rect x="142" y="48" width="34" height="30" rx="4" fill="#00A1FF"/><rect x="156" y="48" width="6" height="30" fill="#fff"/><path d="M159 48 C150 32 140 40 159 48 C178 40 168 32 159 48Z" fill="none" stroke="#00A1FF" stroke-width="3"/></svg></div>
       </div>
     </div>
   </div>
@@ -603,7 +652,11 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
 
 <footer>
   <div class="wrap">
-    <p>[오늘의집 로고 자리] 오행의집 × 오늘의집</p>
+    <div class="footer-brand">
+      <span class="fb-item"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M13 2.5 C14.2 2.5 15 2.9 15.8 3.6 L22 9 C23.2 10 24 11.4 24 13 V20.5 C24 22.4 22.4 24 20.5 24 H5.5 C3.6 24 2 22.4 2 20.5 V13 C2 11.4 2.8 10 4 9 L10.2 3.6 C11 2.9 11.8 2.5 13 2.5Z" fill="#00A1FF"/></svg><b>오늘의집</b></span>
+      <span class="fb-x">×</span>
+      <span class="fb-item"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M13 2.5 C14.2 2.5 15 2.9 15.8 3.6 L22 9 C23.2 10 24 11.4 24 13 V20.5 C24 22.4 22.4 24 20.5 24 H5.5 C3.6 24 2 22.4 2 20.5 V13 C2 11.4 2.8 10 4 9 L10.2 3.6 C11 2.9 11.8 2.5 13 2.5Z" fill="#00A1FF"/><path d="M9 15.5 C9 13 11 11 13 11 C15 11 17 13 17 15.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg><b class="serif">오행의집</b></span>
+    </div>
     <p>이용약관 · 개인정보처리방침 · 고객센터 · 사주 해석은 참고용입니다.</p>
   </div>
 </footer>
@@ -661,6 +714,265 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
 
   input.addEventListener('input', function () { delete input.dataset.lat; delete input.dataset.lon; });
 })();
+</script>
+<script>
+/* ── 사주 계산 코어 (DOM 없음) ── */
+var Saju = (function () {
+  var STEM_KO = '갑을병정무기경신임계'.split('');
+  var STEM_HJ = '甲乙丙丁戊己庚辛壬癸'.split('');
+  var BR_KO = '자축인묘진사오미신유술해'.split('');
+  var BR_HJ = '子丑寅卯辰巳午未申酉戌亥'.split('');
+  var EL = ['wood', 'fire', 'earth', 'metal', 'water'];
+  var STEM_EL = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4];
+  var BR_EL = [4, 2, 0, 0, 2, 1, 1, 2, 3, 3, 2, 4];
+  var TIME_BRANCH = { 'ja-ya': 0, 'ja-jo': 0, chuk: 1, 'in': 2, myo: 3, jin: 4, sa: 5, o: 6, mi: 7, sin: 8, yu: 9, sul: 10, hae: 11 };
+
+  function rad(d) { return d * Math.PI / 180; }
+  function norm(d) { d = d % 360; return d < 0 ? d + 360 : d; }
+
+  // KST(UTC+9) 시각 → 율리우스일(UT)
+  function jdFromKST(y, m, d, hourKST) {
+    return Date.UTC(y, m - 1, d) / 86400000 + 2440587.5 + (hourKST - 9) / 24;
+  }
+  // 태양 황경 (Meeus 저정밀식, 오차 약 0.01°)
+  function sunLon(jd) {
+    var T = (jd - 2451545) / 36525;
+    var L0 = 280.46646 + 36000.76983 * T;
+    var M = 357.52911 + 35999.05029 * T;
+    var C = (1.914602 - 0.004817 * T) * Math.sin(rad(M)) + 0.019993 * Math.sin(rad(2 * M)) + 0.000289 * Math.sin(rad(3 * M));
+    var om = 125.04 - 1934.136 * T;
+    return norm(L0 + C - 0.00569 - 0.00478 * Math.sin(rad(om)));
+  }
+  // 일(日) 번호
+  function jdn(y, m, d) { return Date.UTC(y, m - 1, d) / 86400000 + 2440588; }
+
+  function isValidDate(y, m, d) {
+    var t = new Date(Date.UTC(y, m - 1, d));
+    return t.getUTCFullYear() === y && t.getUTCMonth() === m - 1 && t.getUTCDate() === d;
+  }
+
+  // 음력 → 양력 (Intl 중국력 이용)
+  var fmt = null;
+  function chineseParts(date) {
+    if (!fmt) fmt = new Intl.DateTimeFormat('en-u-ca-chinese', { timeZone: 'UTC', year: 'numeric', month: 'numeric', day: 'numeric' });
+    var o = {};
+    fmt.formatToParts(date).forEach(function (p) { o[p.type] = p.value; });
+    var leap = /bis/i.test(o.month);
+    return { year: parseInt(o.relatedYear, 10), month: parseInt(o.month, 10), day: parseInt(o.day, 10), leap: leap };
+  }
+  function lunarToSolar(ly, lm, ld, leap) {
+    var start = Date.UTC(ly, 0, 15), end = Date.UTC(ly + 1, 1, 25);
+    for (var t = start; t <= end; t += 86400000) {
+      var c = chineseParts(new Date(t));
+      if (c.year === ly && c.month === lm && c.day === ld && c.leap === !!leap) {
+        var d = new Date(t);
+        return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate() };
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param {{y,m,d}} solar  양력 생년월일
+   * @param {string} timeKey  '', 'unknown' 또는 TIME_BRANCH 키
+   */
+  function calc(solar, timeKey) {
+    var y = solar.y, m = solar.m, d = solar.d;
+    var hasTime = timeKey && timeKey !== 'unknown' && TIME_BRANCH.hasOwnProperty(timeKey);
+    var b = hasTime ? TIME_BRANCH[timeKey] : null;
+    // 절기 판단에 쓸 대표 시각(KST)
+    var hr = 12;
+    if (hasTime) hr = timeKey === 'ja-ya' ? 23.75 : timeKey === 'ja-jo' ? 0.75 : 1.5 + 2 * (b - 1) + 1;
+    var lon = sunLon(jdFromKST(y, m, d, hr));
+
+    // 연주 (입춘 기준)
+    var sy = y;
+    if (m <= 2 && lon < 315 && lon >= 270) sy = y - 1;
+    var yStem = ((sy - 4) % 10 + 10) % 10, yBr = ((sy - 4) % 12 + 12) % 12;
+
+    // 월주 (12절 기준, 인월=0)
+    var mi = Math.floor(norm(lon - 315) / 30);
+    var mBr = (2 + mi) % 12;
+    var mStem = ((yStem % 5) * 2 + 2 + mi) % 10;
+
+    // 일주
+    var dIdx = ((jdn(y, m, d) - 2415021 + 10) % 60 + 60) % 60;
+    var dStem = dIdx % 10, dBr = dIdx % 12;
+
+    var pillars = {
+      year: { s: yStem, b: yBr },
+      month: { s: mStem, b: mBr },
+      day: { s: dStem, b: dBr },
+      hour: null
+    };
+    if (hasTime) {
+      var baseStem = timeKey === 'ja-ya' ? (dStem + 1) % 10 : dStem; // 야자시: 다음 날 일간 기준
+      pillars.hour = { s: ((baseStem % 5) * 2 + b) % 10, b: b };
+    }
+
+    // 오행 점수 (천간 1, 지지 본기 1, 월지 1.5)
+    var w = [0, 0, 0, 0, 0];
+    ['year', 'month', 'day', 'hour'].forEach(function (k) {
+      var p = pillars[k]; if (!p) return;
+      w[STEM_EL[p.s]] += 1;
+      w[BR_EL[p.b]] += (k === 'month' ? 1.5 : 1);
+    });
+    var total = w.reduce(function (a, c) { return a + c; }, 0);
+    var pct = w.map(function (v) { return Math.round(v / total * 100); });
+    return { pillars: pillars, weights: w, pct: pct, dayMaster: dStem, hasTime: hasTime };
+  }
+
+  return {
+    STEM_KO: STEM_KO, STEM_HJ: STEM_HJ, BR_KO: BR_KO, BR_HJ: BR_HJ, EL: EL, STEM_EL: STEM_EL, BR_EL: BR_EL,
+    calc: calc, lunarToSolar: lunarToSolar, isValidDate: isValidDate, sunLon: sunLon, jdFromKST: jdFromKST
+  };
+})();
+if (typeof module !== 'undefined') module.exports = Saju;
+
+</script>
+<script>
+/* ── 사주 분석 UI ── */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var EL = [
+    { k: 'wood',  ko: '목(木)', dir: '동쪽', trait: '추진력과 성장의 기운', lack: '새롭게 시작할 활력',
+      rec: { color: '그린, 올리브, 우드 브라운', material: '원목, 식물, 면·리넨', shape: '세로로 길쭉한 형태, 직선형', style: '내추럴 · 보태니컬' } },
+    { k: 'fire',  ko: '화(火)', dir: '남쪽', trait: '열정과 표현력', lack: '열정과 따뜻한 온기',
+      rec: { color: '레드, 오렌지, 코랄', material: '조명, 캔들, 포근한 패브릭', shape: '삼각형, 끝이 뾰족한 형태', style: '웜톤 · 무드 조명' } },
+    { k: 'earth', ko: '토(土)', dir: '집의 중앙', trait: '안정감과 신뢰', lack: '중심을 잡아줄 안정감',
+      rec: { color: '베이지, 황토, 카멜', material: '도자기, 테라코타, 울', shape: '네모·정방형, 낮고 안정적인 형태', style: '어스톤 · 웜 미니멀' } },
+    { k: 'metal', ko: '금(金)', dir: '서쪽', trait: '결단력과 원칙', lack: '마음을 단단히 잡아줄 기운',
+      rec: { color: '화이트, 실버, 골드', material: '금속, 유리, 스톤', shape: '원형, 매끈하고 둥근 형태', style: '모던 미니멀' } },
+    { k: 'water', ko: '수(水)', dir: '북쪽', trait: '지혜와 유연함', lack: '마음을 식혀줄 여유',
+      rec: { color: '블랙, 네이비, 딥블루', material: '유리, 거울, 실크 같은 광택 소재', shape: '물결·곡선형, 자유로운 형태', style: '차분한 모노톤 · 시크' } }
+  ];
+  var TIME_LABEL = {
+    'ja-ya': '자시(야자시)', 'ja-jo': '자시(조자시)', chuk: '축시', 'in': '인시', myo: '묘시', jin: '진시', sa: '사시',
+    o: '오시', mi: '미시', sin: '신시', yu: '유시', sul: '술시', hae: '해시'
+  };
+  var MIN_SHOW = 10; // 이 값(%) 미만이면 "부족"으로 표시
+
+  function renderScores(pct) {
+    var max = Math.max(40, Math.max.apply(null, pct));
+    $('score-list').innerHTML = EL.map(function (e, i) {
+      return '<div class="score-row"><span>' + e.ko + '</span><div class="bar"><i class="bar-' + e.k +
+        '" style="width:' + Math.round(pct[i] / max * 100) + '%"></i></div><span>' + pct[i] + '%</span></div>';
+    }).join('');
+  }
+
+  function renderRadar(pct) {
+    var max = Math.max(40, Math.max.apply(null, pct));
+    function pt(i, r) { var a = (-90 + 72 * i) * Math.PI / 180; return [100 + r * Math.cos(a), 100 + r * Math.sin(a)]; }
+    function poly(r) { return [0, 1, 2, 3, 4].map(function (i) { return pt(i, r).map(function (v) { return v.toFixed(1); }).join(','); }).join(' '); }
+    var cols = ['#5B9A47', '#E2594A', '#E0A93B', '#B7A88F', '#4F8FC0'], hj = ['木', '火', '土', '金', '水'];
+    var g = [.33, .66, 1].map(function (k) { return '<polygon points="' + poly(70 * k) + '" fill="none" stroke="#99D9FF" stroke-width="1"/>'; }).join('');
+    g += [0, 1, 2, 3, 4].map(function (i) { var p = pt(i, 70); return '<line x1="100" y1="100" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '" stroke="#99D9FF" stroke-width="1"/>'; }).join('');
+    var dp = pct.map(function (v, i) { return pt(i, 70 * v / max); });
+    g += '<polygon points="' + dp.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ') + '" fill="#00A1FF" fill-opacity=".22" stroke="#00A1FF" stroke-width="2.5" stroke-linejoin="round"/>';
+    g += dp.map(function (p, i) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4.5" fill="' + cols[i] + '" stroke="#fff" stroke-width="1.5"/>'; }).join('');
+    g += [0, 1, 2, 3, 4].map(function (i) { var p = pt(i, 84); return '<text x="' + p[0].toFixed(1) + '" y="' + (p[1] + 4).toFixed(1) + '" font-size="11" text-anchor="middle" fill="#4A5A70">' + hj[i] + '</text>'; }).join('');
+    $('radar').innerHTML = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="오행 레이더 차트">' + g + '</svg>';
+  }
+
+  function renderPillars(res) {
+    var order = [['hour', '시주'], ['day', '일주'], ['month', '월주'], ['year', '년주']];
+    $('pillars').innerHTML = order.map(function (o) {
+      var p = res.pillars[o[0]];
+      var head = '<div class="pl-head">' + o[1] + (o[0] === 'day' ? ' <em>(나)</em>' : '') + '</div>';
+      if (!p) return '<div class="pillar">' + head + '<div class="pcell p-none">미입력</div><div class="pcell p-none">–</div></div>';
+      var se = EL[Saju.STEM_EL[p.s]], be = EL[Saju.BR_EL[p.b]];
+      return '<div class="pillar">' + head +
+        '<div class="pcell p-' + se.k + '"><b>' + Saju.STEM_HJ[p.s] + '</b><span>' + Saju.STEM_KO[p.s] + ' · ' + se.ko.slice(0, 1) + '</span></div>' +
+        '<div class="pcell p-' + be.k + '"><b>' + Saju.BR_HJ[p.b] + '</b><span>' + Saju.BR_KO[p.b] + ' · ' + be.ko.slice(0, 1) + '</span></div></div>';
+    }).join('');
+  }
+
+  function pickLack(pct) {
+    var min = Math.min.apply(null, pct), idx = pct.indexOf(min);
+    var list = [];
+    pct.forEach(function (v, i) { if (v < MIN_SHOW || v === min) list.push(i); });
+    return { idx: idx, list: list, min: min };
+  }
+  function pickStrong(pct, avoid) {
+    var max = -1, idx = 0;
+    pct.forEach(function (v, i) { if (i !== avoid && v > max) { max = v; idx = i; } });
+    return idx;
+  }
+
+  function renderReading(res, loc) {
+    var pct = res.pct, lk = pickLack(pct), strong = pickStrong(pct, lk.idx);
+    var L = EL[lk.idx], S = EL[strong], dm = EL[Saju.STEM_EL[res.dayMaster]];
+    var dmName = Saju.STEM_KO[res.dayMaster] + '(' + Saju.STEM_HJ[res.dayMaster] + ')';
+    $('reading').textContent = '일간 ' + dmName + ' ' + dm.ko.slice(0, 1) + '인 사주예요. ' + S.ko.slice(0, 1) + ' 기운(' + S.trait + ')은 강하고, ' +
+      L.ko.slice(0, 1) + ' 기운(' + L.lack + ')은 ' + (lk.min < MIN_SHOW ? '부족해요.' : '상대적으로 적은 편이에요.');
+    $('lack-chips').innerHTML = lk.list.map(function (i) {
+      return '<span class="chip chip-' + EL[i].k + '" style="font-size:14px; padding:5px 14px;">' + EL[i].ko + ' ' + pct[i] + '%</span>';
+    }).join('');
+    $('lack-text').textContent = lk.min < MIN_SHOW ? '보완이 필요해요.' : '크게 부족한 오행은 없어요. 가장 적은 기운을 살짝 채워보세요.';
+    $('space-note').textContent = (loc || '거주지') + ' 기준으로, ' + L.dir + ' 공간에 ' + L.rec.color.split(',')[0] + ' 계열 ' + L.ko.slice(0, 1) + ' 기운의 소품을 두면 좋아요.';
+    $('rec-color').textContent = '색상: ' + L.rec.color;
+    $('rec-material').textContent = '소재: ' + L.rec.material;
+    $('rec-shape').textContent = '형태: ' + L.rec.shape;
+    $('rec-style').textContent = '공간 스타일: ' + L.rec.style;
+  }
+
+  // 초기(샘플) 표시
+  renderScores([28, 24, 22, 6, 20]);
+  renderRadar([28, 24, 22, 6, 20]);
+
+  // 음력 선택 시 윤달 체크박스 노출
+  var calRadios = document.querySelectorAll('input[name="cal"]');
+  function syncLeap() {
+    var lunar = document.querySelector('input[name="cal"]:checked').value === 'lunar';
+    $('leap-wrap').style.display = lunar ? 'inline-flex' : 'none';
+    if (!lunar) $('leap').checked = false;
+  }
+  Array.prototype.forEach.call(calRadios, function (r) { r.addEventListener('change', syncLeap); });
+  syncLeap();
+
+  function msg(text, ok) { var el = $('form-status'); el.textContent = text; el.className = 'gps-status ' + (ok ? 'ok' : 'err'); }
+
+  $('saju-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var raw = $('birth-date').value.trim();
+    var m = /^(\d{4})\D?(\d{1,2})\D?(\d{1,2})$/.exec(raw);
+    if (!m) return msg('생년월일을 YYYY-MM-DD 형식으로 입력해 주세요. (예: 1995-03-21)'), $('birth-date').focus();
+    var y = +m[1], mo = +m[2], d = +m[3];
+    if (y < 1900 || y > 2100) return msg('1900년~2100년 사이의 날짜만 분석할 수 있어요.'), $('birth-date').focus();
+    var lunar = document.querySelector('input[name="cal"]:checked').value === 'lunar';
+    var solar;
+    if (lunar) {
+      if (mo < 1 || mo > 12 || d < 1 || d > 30) return msg('음력 날짜를 다시 확인해 주세요.'), $('birth-date').focus();
+      solar = Saju.lunarToSolar(y, mo, d, $('leap').checked);
+      if (!solar) return msg('해당하는 음력 날짜를 찾을 수 없어요. 일수나 윤달 체크를 확인해 주세요.'), $('birth-date').focus();
+    } else {
+      if (!Saju.isValidDate(y, mo, d)) return msg('존재하지 않는 날짜예요. 다시 확인해 주세요.'), $('birth-date').focus();
+      solar = { y: y, m: mo, d: d };
+    }
+    if (Date.UTC(solar.y, solar.m - 1, solar.d) > Date.now()) return msg('미래 날짜는 분석할 수 없어요.'), $('birth-date').focus();
+    if (!document.querySelector('input[name="sex"]:checked')) return msg('성별을 선택해 주세요.');
+    var loc = $('location-input').value.trim();
+    if (!loc) return msg('거주 공간 위치를 입력하거나 GPS 버튼을 눌러 주세요.'), $('location-input').focus();
+
+    var timeKey = $('birth-time').value;
+    var res = Saju.calc(solar, timeKey);
+
+    renderScores(res.pct);
+    renderRadar(res.pct);
+    renderPillars(res);
+    renderReading(res, loc);
+    $('pillars-box').hidden = false;
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var dateTxt = solar.y + '-' + pad(solar.m) + '-' + pad(solar.d);
+    $('result-note').textContent = '※ 입력하신 정보 기준 결과예요. (양력 ' + dateTxt + (lunar ? ', 음력 입력을 변환' : '') + ' · ' +
+      (res.hasTime ? TIME_LABEL[timeKey] : '태어난 시각 미입력') + ')';
+    $('pillar-note').textContent = (res.hasTime ? '' : '태어난 시각을 입력하지 않아 시주 없이 6글자로 분석했어요. ') +
+      '절기(입춘·경칩 등) 기준으로 계산했고, 오행 점수는 천간·지지(월지 가중)로 단순 계산한 참고용 값이에요.';
+    msg('분석이 완료됐어요. 아래에서 결과를 확인하세요.', true);
+    $('step2').scrollIntoView({ behavior: 'smooth' });
+  });
+})();
+
 </script>
 </body>
 </html>
