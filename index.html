@@ -301,12 +301,51 @@ footer p { font-size: 13px; color: var(--fg-3); max-width: none; line-height: 2;
 .p-none  { background: var(--bg-raised); color: var(--fg-3); border-color: var(--line); justify-content: center; min-height: 66px; }
 [hidden] { display: none !important; }
 
+/* ── 입장 전 선택 오버레이 ── */
+#gate {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(255,255,255,.96); backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; overflow-y: auto;
+}
+#gate[hidden] { display: none !important; }
+.gate-box { width: 100%; max-width: 640px; margin: auto; }
+.gate-box h2 { margin-top: 6px; }
+.gate-sub { font-size: 14px; margin-top: 4px; }
+.gate-main { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+.mode-card {
+  text-align: left; font-family: var(--sans); cursor: pointer;
+  border: 1px solid var(--line-mid); background: var(--bg-card); color: var(--fg);
+  border-radius: var(--r); padding: 22px 20px;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: border-color .15s, background .15s;
+}
+.mode-card:hover { border-color: var(--accent); }
+.mode-card[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent) inset; }
+.mode-card b { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; }
+.mode-card span { font-size: 13px; color: var(--fg-3); line-height: 1.5; }
+.gate-multi { margin-top: 22px; }
+.gate-multi-label { font-size: 13px; font-weight: 500; color: var(--fg-2); margin-bottom: 10px; max-width: none; }
+.gate-multi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.gate-multi-grid .mode-card { padding: 16px 16px; }
+.gate-multi-grid .mode-card b { font-size: 1rem; }
+
+/* ── 인원별 입력 ── */
+.person { border: 1px solid var(--line); border-radius: var(--r); padding: 18px; margin-bottom: 16px; background: var(--bg-raised); }
+.person-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.person-head h3 { margin: 0; font-size: 1rem; }
+.link-btn { background: none; border: none; font: inherit; font-size: 13px; color: var(--fg-3); cursor: pointer; text-decoration: underline; padding: 4px; }
+.link-btn:hover { color: #C43D2E; }
+.add-person { margin-bottom: 6px; }
+.mode-summary { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; font-size: 14px; color: var(--fg-2); }
+.pill-title { margin: 18px 0 6px; font-size: .95rem; }
+
 /* ── Divider ── */
 hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
 
 /* ── Responsive ── */
 @media (max-width: 720px) {
-  .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+  .grid2, .grid3, .grid4, .gate-main, .gate-multi-grid { grid-template-columns: 1fr; }
   nav { gap: 20px; }
   section { padding: 68px 0; }
 }
@@ -317,6 +356,31 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
 </style>
 </head>
 <body>
+
+<!-- 입장 전 선택 -->
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="gate-box">
+    <span class="step-label">시작하기 전에</span>
+    <h2 id="gate-title">어떻게 살고 계세요?</h2>
+    <p class="note gate-sub">선택에 따라 입력 방식이 달라져요. 언제든 다시 바꿀 수 있어요.</p>
+    <div class="gate-main">
+      <button type="button" class="mode-card" data-mode="solo" aria-pressed="false">
+        <b>혼자 살아요</b><span>1인 가구예요. 내 사주로 공간을 꾸며요.</span>
+      </button>
+      <button type="button" class="mode-card" id="gate-multi-btn" aria-pressed="false" aria-expanded="false" aria-controls="gate-multi">
+        <b>둘 이상이 살아요</b><span>함께 사는 사람들의 사주를 같이 보고 꾸며요.</span>
+      </button>
+    </div>
+    <div class="gate-multi" id="gate-multi" hidden>
+      <p class="gate-multi-label">누구와 함께 사세요?</p>
+      <div class="gate-multi-grid">
+        <button type="button" class="mode-card" data-mode="couple" aria-pressed="false"><b>연인과 살아요</b><span>동거 중인 연인</span></button>
+        <button type="button" class="mode-card" data-mode="married" aria-pressed="false"><b>부부예요</b><span>신혼부부, 부부</span></button>
+        <button type="button" class="mode-card" data-mode="family" aria-pressed="false"><b>가족과 같이 살아요</b><span>부모님, 자녀, 형제자매</span></button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <header>
   <div class="wrap inner">
@@ -435,43 +499,16 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
     <span class="step-label">Step 01</span>
     <h2>사주 정보 &amp; 거주 위치 입력</h2>
     <form class="box" id="saju-form" style="margin-top:32px; max-width:580px;" novalidate>
-      <label>생년월일 <span class="label-opt">(필수)</span></label>
-      <div class="row">
-        <div style="flex:1; min-width:160px;">
-          <input type="text" id="birth-date" inputmode="numeric" autocomplete="bday" placeholder="YYYY-MM-DD">
-        </div>
-        <div class="radio-group">
-          <label class="radio-label"><input type="radio" name="cal" value="solar" checked> 양력</label>
-          <label class="radio-label"><input type="radio" name="cal" value="lunar"> 음력</label>
-          <label class="radio-label" id="leap-wrap" style="display:none;"><input type="checkbox" id="leap"> 윤달</label>
-        </div>
+      <div class="mode-summary">
+        <span>선택: <b id="mode-name"></b></span>
+        <button type="button" class="link-btn" id="mode-reset" style="color:var(--accent-text);">다시 선택</button>
       </div>
 
-      <label>성별 <span class="label-opt">(필수)</span></label>
-      <div class="radio-group">
-        <label class="radio-label"><input type="radio" name="sex" value="f"> 여성</label>
-        <label class="radio-label"><input type="radio" name="sex" value="m"> 남성</label>
+      <div id="persons"></div>
+      <div id="add-wrap" hidden>
+        <button type="button" class="btn add-person" id="add-person">+ 추가하기</button>
+        <p class="note" id="add-note"></p>
       </div>
-
-      <label>태어난 시각 <span class="label-opt">(선택)</span></label>
-      <select id="birth-time" name="birth-time">
-        <option value="" selected>시각 선택</option>
-        <option value="unknown">모름</option>
-        <option value="ja-ya">자시(子時) · 야자시 23:30 ~ 23:59</option>
-        <option value="ja-jo">자시(子時) · 조자시 00:00 ~ 01:29</option>
-        <option value="chuk">축시(丑時) 01:30 ~ 03:29</option>
-        <option value="in">인시(寅時) 03:30 ~ 05:29</option>
-        <option value="myo">묘시(卯時) 05:30 ~ 07:29</option>
-        <option value="jin">진시(辰時) 07:30 ~ 09:29</option>
-        <option value="sa">사시(巳時) 09:30 ~ 11:29</option>
-        <option value="o">오시(午時) 11:30 ~ 13:29</option>
-        <option value="mi">미시(未時) 13:30 ~ 15:29</option>
-        <option value="sin">신시(申時) 15:30 ~ 17:29</option>
-        <option value="yu">유시(酉時) 17:30 ~ 19:29</option>
-        <option value="sul">술시(戌時) 19:30 ~ 21:29</option>
-        <option value="hae">해시(亥時) 21:30 ~ 23:29</option>
-      </select>
-      <p class="note">한국 표준시 보정 기준이에요. 모르면 비워두셔도 분석 가능해요.</p>
 
       <label>거주 공간 위치 <span class="label-opt">(필수)</span></label>
       <div class="row">
@@ -491,6 +528,47 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
   </div>
 </section>
 
+<template id="person-tpl">
+  <div class="person">
+    <div class="person-head"><h3 class="p-title">나</h3><button type="button" class="link-btn p-remove" hidden>삭제</button></div>
+    <label>이름·별칭 <span class="label-opt">(선택)</span></label>
+    <input type="text" class="p-name" placeholder="예: 민수">
+    <label>생년월일 <span class="label-opt">(필수)</span></label>
+    <div class="row">
+      <div style="flex:1; min-width:160px;"><input type="text" class="p-date" inputmode="numeric" placeholder="YYYY-MM-DD"></div>
+      <div class="radio-group">
+        <label class="radio-label"><input type="radio" class="p-cal" value="solar" checked> 양력</label>
+        <label class="radio-label"><input type="radio" class="p-cal" value="lunar"> 음력</label>
+        <label class="radio-label p-leap-wrap" style="display:none;"><input type="checkbox" class="p-leap"> 윤달</label>
+      </div>
+    </div>
+    <label>성별 <span class="label-opt">(필수)</span></label>
+    <div class="radio-group">
+      <label class="radio-label"><input type="radio" class="p-sex" value="f"> 여성</label>
+      <label class="radio-label"><input type="radio" class="p-sex" value="m"> 남성</label>
+    </div>
+    <label>태어난 시각 <span class="label-opt">(선택)</span></label>
+    <select class="p-time">
+      <option value="" selected>시각 선택</option>
+      <option value="unknown">모름</option>
+      <option value="ja-ya">자시(子時) · 야자시 23:30 ~ 23:59</option>
+      <option value="ja-jo">자시(子時) · 조자시 00:00 ~ 01:29</option>
+      <option value="chuk">축시(丑時) 01:30 ~ 03:29</option>
+      <option value="in">인시(寅時) 03:30 ~ 05:29</option>
+      <option value="myo">묘시(卯時) 05:30 ~ 07:29</option>
+      <option value="jin">진시(辰時) 07:30 ~ 09:29</option>
+      <option value="sa">사시(巳時) 09:30 ~ 11:29</option>
+      <option value="o">오시(午時) 11:30 ~ 13:29</option>
+      <option value="mi">미시(未時) 13:30 ~ 15:29</option>
+      <option value="sin">신시(申時) 15:30 ~ 17:29</option>
+      <option value="yu">유시(酉時) 17:30 ~ 19:29</option>
+      <option value="sul">술시(戌時) 19:30 ~ 21:29</option>
+      <option value="hae">해시(亥時) 21:30 ~ 23:29</option>
+    </select>
+    <p class="note">한국 표준시 보정 기준이에요. 모르면 비워두셔도 분석 가능해요.</p>
+  </div>
+</template>
+
 <!-- 5. STEP 02 -->
 <section id="step2">
   <div class="wrap">
@@ -498,8 +576,8 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
     <h2>사주 분석 결과</h2>
     <p class="note" id="result-note" style="margin-bottom:36px;">※ 아래는 결과 화면 예시 (샘플 데이터) — 위에서 정보를 입력하고 &lsquo;분석하기&rsquo;를 눌러 보세요.</p>
     <div class="box" id="pillars-box" hidden style="margin-bottom:20px;">
-      <h3>나의 사주 원국</h3>
-      <div class="pillars" id="pillars"></div>
+      <h3 id="pillars-title">나의 사주 원국</h3>
+      <div id="pillars"></div>
       <p class="note" id="pillar-note" style="margin-top:14px;"></p>
     </div>
     <div class="grid2" style="align-items:start; gap:20px;">
@@ -874,9 +952,9 @@ if (typeof module !== 'undefined') module.exports = Saju;
     $('radar').innerHTML = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="오행 레이더 차트">' + g + '</svg>';
   }
 
-  function renderPillars(res) {
+  function pillarsHTML(res) {
     var order = [['hour', '시주'], ['day', '일주'], ['month', '월주'], ['year', '년주']];
-    $('pillars').innerHTML = order.map(function (o) {
+    return '<div class="pillars">' + order.map(function (o) {
       var p = res.pillars[o[0]];
       var head = '<div class="pl-head">' + o[1] + (o[0] === 'day' ? ' <em>(나)</em>' : '') + '</div>';
       if (!p) return '<div class="pillar">' + head + '<div class="pcell p-none">미입력</div><div class="pcell p-none">–</div></div>';
@@ -884,8 +962,9 @@ if (typeof module !== 'undefined') module.exports = Saju;
       return '<div class="pillar">' + head +
         '<div class="pcell p-' + se.k + '"><b>' + Saju.STEM_HJ[p.s] + '</b><span>' + Saju.STEM_KO[p.s] + ' · ' + se.ko.slice(0, 1) + '</span></div>' +
         '<div class="pcell p-' + be.k + '"><b>' + Saju.BR_HJ[p.b] + '</b><span>' + Saju.BR_KO[p.b] + ' · ' + be.ko.slice(0, 1) + '</span></div></div>';
-    }).join('');
+    }).join('') + '</div>';
   }
+  function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   function pickLack(pct) {
     var min = Math.min.apply(null, pct), idx = pct.indexOf(min);
@@ -920,53 +999,149 @@ if (typeof module !== 'undefined') module.exports = Saju;
   renderScores([28, 24, 22, 6, 20]);
   renderRadar([28, 24, 22, 6, 20]);
 
-  // 음력 선택 시 윤달 체크박스 노출
-  var calRadios = document.querySelectorAll('input[name="cal"]');
-  function syncLeap() {
-    var lunar = document.querySelector('input[name="cal"]:checked').value === 'lunar';
-    $('leap-wrap').style.display = lunar ? 'inline-flex' : 'none';
-    if (!lunar) $('leap').checked = false;
+  // ── 거주 형태 선택 & 인원 입력 ──
+  var MODES = {
+    solo:    { name: '1인 가구 · 혼자 살아요', multi: false, hint: '' },
+    couple:  { name: '연인과 살아요', multi: true, hint: '함께 사는 연인의 정보를 추가해 주세요.' },
+    married: { name: '부부예요', multi: true, hint: '배우자의 정보를 추가해 주세요.' },
+    family:  { name: '가족과 같이 살아요', multi: true, hint: '함께 사는 가족 구성원을 한 명씩 추가해 주세요.' }
+  };
+  var MAX_PERSONS = 6, mode = null;
+  var personsEl = $('persons'), tpl = $('person-tpl');
+
+  function personEls() { return Array.prototype.slice.call(personsEl.querySelectorAll('.person')); }
+  function refreshPersons() {
+    var list = personEls(), multi = MODES[mode].multi;
+    list.forEach(function (el, i) {
+      el.querySelector('.p-title').textContent = !multi ? '내 정보' : (i === 0 ? '나' : '함께 사는 분 ' + i);
+      el.querySelector('.p-remove').hidden = !(multi && i > 0);
+      Array.prototype.forEach.call(el.querySelectorAll('input[type=radio]'), function (r) {
+        if (r.classList.contains('p-cal')) r.name = 'cal-' + i;
+        if (r.classList.contains('p-sex')) r.name = 'sex-' + i;
+      });
+    });
+    $('add-wrap').hidden = !multi;
+    $('add-person').hidden = list.length >= MAX_PERSONS;
+    $('add-note').textContent = list.length >= MAX_PERSONS ? '최대 ' + MAX_PERSONS + '명까지 입력할 수 있어요.' : MODES[mode].hint + ' (최대 ' + MAX_PERSONS + '명)';
   }
-  Array.prototype.forEach.call(calRadios, function (r) { r.addEventListener('change', syncLeap); });
-  syncLeap();
+  function addPerson() {
+    var el = tpl.content.firstElementChild.cloneNode(true);
+    function sync() {
+      var lunar = el.querySelector('.p-cal:checked').value === 'lunar';
+      el.querySelector('.p-leap-wrap').style.display = lunar ? 'inline-flex' : 'none';
+      if (!lunar) el.querySelector('.p-leap').checked = false;
+    }
+    Array.prototype.forEach.call(el.querySelectorAll('.p-cal'), function (r) { r.addEventListener('change', sync); });
+    el.querySelector('.p-remove').addEventListener('click', function () { el.remove(); refreshPersons(); });
+    personsEl.appendChild(el);
+    refreshPersons();
+    return el;
+  }
+  var gate = $('gate');
+  function openGate() { gate.hidden = false; document.body.style.overflow = 'hidden'; }
+  function closeGate() { gate.hidden = true; document.body.style.overflow = ''; }
+  function chooseMode(key) {
+    mode = key;
+    Array.prototype.forEach.call(document.querySelectorAll('.mode-card[data-mode]'), function (c) {
+      c.setAttribute('aria-pressed', c.getAttribute('data-mode') === key ? 'true' : 'false');
+    });
+    var list = personEls();
+    if (!list.length) addPerson();
+    else if (!MODES[key].multi) list.slice(1).forEach(function (el) { el.remove(); }); // 1인 가구: 첫 입력칸만 유지
+    $('mode-name').textContent = MODES[key].name;
+    refreshPersons();
+    closeGate();
+    window.scrollTo(0, 0);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.mode-card[data-mode]'), function (c) {
+    c.addEventListener('click', function () { chooseMode(c.getAttribute('data-mode')); });
+  });
+  $('gate-multi-btn').addEventListener('click', function () {
+    var box = $('gate-multi'), open = box.hidden;
+    box.hidden = !open;
+    this.setAttribute('aria-pressed', open ? 'true' : 'false');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+  $('add-person').addEventListener('click', function () {
+    if (personEls().length >= MAX_PERSONS) return;
+    addPerson().querySelector('.p-name').focus();
+  });
+  $('mode-reset').addEventListener('click', openGate);
+  openGate();
 
   function msg(text, ok) { var el = $('form-status'); el.textContent = text; el.className = 'gps-status ' + (ok ? 'ok' : 'err'); }
 
-  $('saju-form').addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    var raw = $('birth-date').value.trim();
-    var m = /^(\d{4})\D?(\d{1,2})\D?(\d{1,2})$/.exec(raw);
-    if (!m) return msg('생년월일을 YYYY-MM-DD 형식으로 입력해 주세요. (예: 1995-03-21)'), $('birth-date').focus();
+  // 한 사람 입력 검증 → { solar, lunar, timeKey, name } 또는 null(메시지 출력)
+  function readPerson(el, label) {
+    var dateEl = el.querySelector('.p-date');
+    function bad(t, f) { msg(label + ': ' + t); (f || dateEl).focus(); return null; }
+    var m = /^(\d{4})\D?(\d{1,2})\D?(\d{1,2})$/.exec(dateEl.value.trim());
+    if (!m) return bad('생년월일을 YYYY-MM-DD 형식으로 입력해 주세요. (예: 1995-03-21)');
     var y = +m[1], mo = +m[2], d = +m[3];
-    if (y < 1900 || y > 2100) return msg('1900년~2100년 사이의 날짜만 분석할 수 있어요.'), $('birth-date').focus();
-    var lunar = document.querySelector('input[name="cal"]:checked').value === 'lunar';
-    var solar;
+    if (y < 1900 || y > 2100) return bad('1900년~2100년 사이의 날짜만 분석할 수 있어요.');
+    var lunar = el.querySelector('.p-cal:checked').value === 'lunar', solar;
     if (lunar) {
-      if (mo < 1 || mo > 12 || d < 1 || d > 30) return msg('음력 날짜를 다시 확인해 주세요.'), $('birth-date').focus();
-      solar = Saju.lunarToSolar(y, mo, d, $('leap').checked);
-      if (!solar) return msg('해당하는 음력 날짜를 찾을 수 없어요. 일수나 윤달 체크를 확인해 주세요.'), $('birth-date').focus();
+      if (mo < 1 || mo > 12 || d < 1 || d > 30) return bad('음력 날짜를 다시 확인해 주세요.');
+      solar = Saju.lunarToSolar(y, mo, d, el.querySelector('.p-leap').checked);
+      if (!solar) return bad('해당하는 음력 날짜를 찾을 수 없어요. 일수나 윤달 체크를 확인해 주세요.');
     } else {
-      if (!Saju.isValidDate(y, mo, d)) return msg('존재하지 않는 날짜예요. 다시 확인해 주세요.'), $('birth-date').focus();
+      if (!Saju.isValidDate(y, mo, d)) return bad('존재하지 않는 날짜예요. 다시 확인해 주세요.');
       solar = { y: y, m: mo, d: d };
     }
-    if (Date.UTC(solar.y, solar.m - 1, solar.d) > Date.now()) return msg('미래 날짜는 분석할 수 없어요.'), $('birth-date').focus();
-    if (!document.querySelector('input[name="sex"]:checked')) return msg('성별을 선택해 주세요.');
+    if (Date.UTC(solar.y, solar.m - 1, solar.d) > Date.now()) return bad('미래 날짜는 분석할 수 없어요.');
+    if (!el.querySelector('.p-sex:checked')) return bad('성별을 선택해 주세요.', el.querySelector('.p-sex'));
+    return { solar: solar, lunar: lunar, timeKey: el.querySelector('.p-time').value, name: el.querySelector('.p-name').value.trim() };
+  }
+
+  $('saju-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (!mode) return openGate();
+    var els = personEls(), multi = MODES[mode].multi, people = [];
+    for (var i = 0; i < els.length; i++) {
+      var label = multi ? (i === 0 ? '나' : '함께 사는 분 ' + i) : '입력 정보';
+      var p = readPerson(els[i], label);
+      if (!p) return;
+      p.res = Saju.calc(p.solar, p.timeKey);
+      p.label = p.name || label;
+      people.push(p);
+    }
+    if (multi && people.length < 2) return msg('함께 사는 분의 정보를 \'+ 추가하기\'로 한 명 이상 추가해 주세요.');
     var loc = $('location-input').value.trim();
     if (!loc) return msg('거주 공간 위치를 입력하거나 GPS 버튼을 눌러 주세요.'), $('location-input').focus();
 
-    var timeKey = $('birth-time').value;
-    var res = Saju.calc(solar, timeKey);
+    // 가구 전체 오행 = 구성원 평균
+    var pct = [0, 0, 0, 0, 0];
+    people.forEach(function (p) { p.res.pct.forEach(function (v, k) { pct[k] += v; }); });
+    pct = pct.map(function (v) { return Math.round(v / people.length); });
+    var agg = people.length === 1 ? people[0].res : { pct: pct, dayMaster: people[0].res.dayMaster };
 
-    renderScores(res.pct);
-    renderRadar(res.pct);
-    renderPillars(res);
-    renderReading(res, loc);
+    renderScores(agg.pct);
+    renderRadar(agg.pct);
+    renderReading(agg, loc);
+    if (people.length > 1) {
+      var LL = EL[pickLack(pct).idx];
+      $('reading').textContent = '함께 사는 ' + people.length + '명의 오행을 합쳐 보면 ' + LL.ko.slice(0, 1) + ' 기운(' + LL.lack + ')이 가장 적어요. 공간으로 함께 채워보세요.';
+    }
+
+    $('pillars-title').textContent = people.length > 1 ? '구성원별 사주 원국' : '나의 사주 원국';
+    $('pillars').innerHTML = people.map(function (p) {
+      var top = '';
+      if (people.length > 1) {
+        var L2 = EL[pickLack(p.res.pct).idx];
+        top = '<h3 class="pill-title">' + esc(p.label) + ' <span class="label-opt" style="font-size:12px;">· 부족한 기운: ' + L2.ko + '</span></h3>';
+      }
+      return top + pillarsHTML(p.res);
+    }).join('');
     $('pillars-box').hidden = false;
+
     var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-    var dateTxt = solar.y + '-' + pad(solar.m) + '-' + pad(solar.d);
-    $('result-note').textContent = '※ 입력하신 정보 기준 결과예요. (양력 ' + dateTxt + (lunar ? ', 음력 입력을 변환' : '') + ' · ' +
-      (res.hasTime ? TIME_LABEL[timeKey] : '태어난 시각 미입력') + ')';
-    $('pillar-note').textContent = (res.hasTime ? '' : '태어난 시각을 입력하지 않아 시주 없이 6글자로 분석했어요. ') +
+    var p0 = people[0], dateTxt = p0.solar.y + '-' + pad(p0.solar.m) + '-' + pad(p0.solar.d);
+    $('result-note').textContent = people.length > 1
+      ? '※ 입력하신 ' + people.length + '명의 정보 기준 결과예요. 오행 점수는 구성원 평균이에요. (' + MODES[mode].name + ')'
+      : '※ 입력하신 정보 기준 결과예요. (양력 ' + dateTxt + (p0.lunar ? ', 음력 입력을 변환' : '') + ' · ' +
+        (p0.res.hasTime ? TIME_LABEL[p0.timeKey] : '태어난 시각 미입력') + ')';
+    $('pillar-note').textContent = (people.every(function (p) { return p.res.hasTime; }) ? '' : '태어난 시각을 입력하지 않은 분은 시주 없이 6글자로 분석했어요. ') +
       '절기(입춘·경칩 등) 기준으로 계산했고, 오행 점수는 천간·지지(월지 가중)로 단순 계산한 참고용 값이에요.';
     msg('분석이 완료됐어요. 아래에서 결과를 확인하세요.', true);
     $('step2').scrollIntoView({ behavior: 'smooth' });
