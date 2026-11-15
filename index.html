@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'><path d='M13 2.5 C14.2 2.5 15 2.9 15.8 3.6 L22 9 C23.2 10 24 11.4 24 13 V20.5 C24 22.4 22.4 24 20.5 24 H5.5 C3.6 24 2 22.4 2 20.5 V13 C2 11.4 2.8 10 4 9 L10.2 3.6 C11 2.9 11.8 2.5 13 2.5Z' fill='%2300A1FF'/><path d='M9 15.5 C9 13 11 11 13 11 C15 11 17 13 17 15.5' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/></svg>">
 <title>오행의집 — 나의 사주로 찾는, 나에게 맞는 우리 집</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -408,7 +409,7 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
       <h1>나의 사주로 찾는,<br>나에게 맞는 우리 집</h1>
       <p class="lead">사주 오행과 내 공간을 함께 보고, 부족한 기운을 채워줄 가구·조명·패브릭·소품을 오늘의집 상품으로 추천해드려요.</p>
       <a class="btn fill" href="#step1">내 사주 · 공간 분석 시작하기</a>
-      <p class="hero-note">필수 입력 3가지 · 약 1분 소요 · [카피 영역]</p>
+      <p class="hero-note">필수 입력 3가지 · 약 1분 소요</p>
     </div>
     <div class="ill"><svg viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
 <rect width="480" height="400" fill="#E6F5FF"/>
@@ -609,7 +610,7 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
   <div class="wrap">
     <span class="step-label">Step 03</span>
     <h2>보완 인테리어 제안 / 상품 추천</h2>
-    <p class="note" style="margin-bottom:28px;">※ 항목을 눌러 펼쳐보세요. 상품은 오늘의집 상품 페이지로 연결됩니다.</p>
+    <p class="note" style="margin-bottom:28px;">※ 항목을 눌러 펼쳐보세요. 추천 키워드로 오늘의집 검색 결과 페이지가 열려요.</p>
 
     <details open>
       <summary>보완 방향 — 색상 · 소재 · 형태 · 공간 스타일</summary>
@@ -620,48 +621,28 @@ hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
           <li id="rec-shape">형태: 원형, 매끈하고 둥근 형태</li>
           <li id="rec-style">공간 스타일: 모던 미니멀</li>
         </ul>
-        <div class="ph sq">[무드보드 이미지]</div>
+        <div id="mood-board" role="img" aria-label="보완 오행 컬러 무드보드"></div>
       </div>
     </details>
 
     <details>
       <summary>가구</summary>
-      <div class="grid4">
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-      </div>
+      <div class="grid4" id="prod-furn"></div>
     </details>
 
     <details>
       <summary>조명</summary>
-      <div class="grid4">
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-      </div>
+      <div class="grid4" id="prod-light"></div>
     </details>
 
     <details>
       <summary>패브릭</summary>
-      <div class="grid4">
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-      </div>
+      <div class="grid4" id="prod-fabric"></div>
     </details>
 
     <details>
       <summary>소품</summary>
-      <div class="grid4">
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-        <div class="product-card"><div class="ph sq">[상품 이미지]</div><div class="meta">상품명<br><span style="color:var(--fg-3);">가격</span><br><a href="#">오늘의집에서 보기 →</a></div></div>
-      </div>
+      <div class="grid4" id="prod-prop"></div>
     </details>
   </div>
 </section>
@@ -978,6 +959,178 @@ if (typeof module !== 'undefined') module.exports = Saju;
     return idx;
   }
 
+  // ── 상품 추천: 오행별 키워드 → 오늘의집 검색 링크 ──
+  var OHOU = 'https://ohou.se/productions/feed?query=';
+  var PROD = {
+    "wood": {
+      "furn": [
+        "원목 선반",
+        "우드 수납장",
+        "원목 사이드테이블",
+        "라탄 의자"
+      ],
+      "light": [
+        "우드 무드등",
+        "라탄 펜던트 조명",
+        "나무 스탠드 조명",
+        "원목 플로어 조명"
+      ],
+      "fabric": [
+        "그린 리넨 커튼",
+        "올리브 침구 세트",
+        "면 쿠션 커버",
+        "내추럴 러그"
+      ],
+      "prop": [
+        "대형 화분 관엽식물",
+        "보태니컬 액자",
+        "우드 트레이",
+        "공기정화식물 화분"
+      ]
+    },
+    "fire": {
+      "furn": [
+        "코랄 의자",
+        "레드 포인트 체어",
+        "오렌지 스툴",
+        "웜톤 소파"
+      ],
+      "light": [
+        "웜 무드등",
+        "캔들 워머 조명",
+        "웜화이트 스탠드 조명",
+        "간접조명 플로어"
+      ],
+      "fabric": [
+        "테라코타 암막커튼",
+        "오렌지 쿠션 커버",
+        "포근한 극세사 블랭킷",
+        "레드 포인트 러그"
+      ],
+      "prop": [
+        "향초 캔들",
+        "캔들 홀더",
+        "코랄 화병",
+        "아로마 디퓨저"
+      ]
+    },
+    "earth": {
+      "furn": [
+        "베이지 수납장",
+        "낮은 원목 테이블",
+        "카멜 패브릭 소파",
+        "로우 사이드테이블"
+      ],
+      "light": [
+        "도자기 스탠드 조명",
+        "베이지 펜던트 조명",
+        "테라코타 무드등",
+        "한지 조명"
+      ],
+      "fabric": [
+        "카멜 울 러그",
+        "베이지 침구 세트",
+        "어스톤 커튼",
+        "황토색 쿠션"
+      ],
+      "prop": [
+        "도자기 화병",
+        "테라코타 화분",
+        "세라믹 오브제",
+        "사각 도자기 트레이"
+      ]
+    },
+    "metal": {
+      "furn": [
+        "스틸 선반",
+        "화이트 원형 테이블",
+        "골드 프레임 거울 테이블",
+        "메탈 행거"
+      ],
+      "light": [
+        "골드 펜던트 조명",
+        "원형 메탈 스탠드 조명",
+        "실버 무드등",
+        "화이트 원형 조명"
+      ],
+      "fabric": [
+        "화이트 암막커튼",
+        "실버 그레이 침구",
+        "화이트 쿠션 커버",
+        "모던 러그 그레이"
+      ],
+      "prop": [
+        "골드 오브제",
+        "유리 화병",
+        "원형 벽거울",
+        "메탈 트레이"
+      ]
+    },
+    "water": {
+      "furn": [
+        "블랙 사이드테이블",
+        "유리 테이블",
+        "네이비 소파",
+        "전신거울 곡선"
+      ],
+      "light": [
+        "블랙 스탠드 조명",
+        "네이비 무드등",
+        "곡선 플로어 조명",
+        "유리 펜던트 조명"
+      ],
+      "fabric": [
+        "네이비 침구 세트",
+        "블랙 암막커튼",
+        "실크 쿠션 커버",
+        "딥블루 러그"
+      ],
+      "prop": [
+        "유리 화병",
+        "어항 수조",
+        "물결 디자인 오브제",
+        "블랙 액자"
+      ]
+    }
+  };
+  var PROD_CAT = { furn: '가구', light: '조명', fabric: '패브릭', prop: '소품' };
+  var PROD_COL = { wood: '#5B9A47', fire: '#E2594A', earth: '#C49A5A', metal: '#8A97A6', water: '#2F5E8C' };
+  // 카테고리별 단색 아이콘 (stroke = 오행 색)
+  var PROD_ICON = {
+    furn:   '<rect x="14" y="26" width="36" height="12" rx="3"/><path d="M18 38v14M46 38v14M18 26V14h28v12"/>',
+    light:  '<path d="M32 8v8M20 40c0-10 5-14 12-14s12 4 12 14z"/><path d="M32 40v12M24 54h16"/>',
+    fabric: '<path d="M10 12h44M14 12v40M26 12c0 14-6 26-6 40M38 12c0 14 6 26 6 40M50 12v40"/>',
+    prop:   '<path d="M26 10h12M28 10v8c-8 4-12 10-12 20 0 10 6 16 16 16s16-6 16-16c0-10-4-16-12-20v-8"/>'
+  };
+  function renderProducts(idx) {
+    var e = EL[idx], col = PROD_COL[e.k];
+    Object.keys(PROD_CAT).forEach(function (c) {
+      $('prod-' + c).innerHTML = PROD[e.k][c].map(function (q) {
+        return '<div class="product-card"><div class="ph sq" style="background:' + col + '1A; border-radius:0;">' +
+          '<svg viewBox="0 0 64 64" width="56%" height="56%" fill="none" stroke="' + col + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + PROD_ICON[c] + '</svg></div>' +
+          '<div class="meta">' + esc(q) + '<br><span style="color:var(--fg-3);">' + e.ko + ' 보완 · ' + PROD_CAT[c] + '</span><br>' +
+          '<a href="' + OHOU + encodeURIComponent(q) + '" target="_blank" rel="noopener noreferrer">오늘의집에서 보기 →</a></div></div>';
+      }).join('');
+    });
+  }
+
+  // ── 무드보드: 오행별 컬러 팔레트 (이미지 대신 색 조합으로 표현) ──
+  var MOOD = {
+    wood:  [['#5B9A47','그린'], ['#8A9A5B','올리브'], ['#A67B5B','우드'], ['#EFE8D8','리넨'], ['#3F6B34','딥그린']],
+    fire:  [['#E2594A','레드'], ['#F28C4B','오렌지'], ['#F4A08E','코랄'], ['#FBE9D9','크림'], ['#B5372B','버건디']],
+    earth: [['#D9C3A0','베이지'], ['#C49A5A','카멜'], ['#B5754A','테라코타'], ['#F2EBDD','아이보리'], ['#8A6A45','브라운']],
+    metal: [['#FFFFFF','화이트'], ['#C9CED6','실버'], ['#D4AF37','골드'], ['#8A97A6','그레이'], ['#EEF1F5','펄']],
+    water: [['#14213D','블랙네이비'], ['#2F5E8C','딥블루'], ['#5C86B0','블루'], ['#AFC4DA','미스트'], ['#1B1B1F','블랙']]
+  };
+  function renderMood(idx) {
+    var e = EL[idx], sw = MOOD[e.k];
+    $('mood-board').innerHTML = '<div style="display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:6px; height:100%; min-height:240px;">' +
+      sw.map(function (c, i) {
+        var dark = /^#(14|1B|2F|3F|5B|8A|A6|B5|E2)/i.test(c[0]) && c[0] !== '#8A97A6';
+        return '<div style="background:' + c[0] + '; border-radius:10px; border:1px solid rgba(0,0,0,.08); display:flex; align-items:flex-end; padding:8px 10px; font-size:12px; font-weight:600; color:' + (dark ? '#fff' : '#1b2a3a') + ';' + (i === 0 ? 'grid-row:1 / span 2;' : '') + '">' + c[1] + '</div>';
+      }).join('') + '</div>';
+  }
+
   function renderReading(res, loc) {
     var pct = res.pct, lk = pickLack(pct), strong = pickStrong(pct, lk.idx);
     var L = EL[lk.idx], S = EL[strong], dm = EL[Saju.STEM_EL[res.dayMaster]];
@@ -993,11 +1146,15 @@ if (typeof module !== 'undefined') module.exports = Saju;
     $('rec-material').textContent = '소재: ' + L.rec.material;
     $('rec-shape').textContent = '형태: ' + L.rec.shape;
     $('rec-style').textContent = '공간 스타일: ' + L.rec.style;
+    renderProducts(lk.idx);
+    renderMood(lk.idx);
   }
 
   // 초기(샘플) 표시
   renderScores([28, 24, 22, 6, 20]);
   renderRadar([28, 24, 22, 6, 20]);
+  renderProducts(3);
+  renderMood(3);
 
   // ── 거주 형태 선택 & 인원 입력 ──
   var MODES = {
