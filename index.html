@@ -365,6 +365,34 @@ input[type="time"] {
   border: 1px solid var(--fg-3); border-radius: var(--r); background: var(--bg-card); color: var(--fg);
 }
 
+/* ── 상품 카드 (눌러보고 싶은 카드) ── */
+.pcard {
+  display: flex; flex-direction: column; text-decoration: none; color: var(--fg);
+  background: var(--bg-card); border: 1px solid var(--card-line); border-radius: var(--r); overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.pcard:hover, .pcard:focus-visible { transform: translateY(-5px); box-shadow: 0 12px 26px rgba(0,161,255,.2); border-color: var(--accent); }
+.pc-art { position: relative; aspect-ratio: 4 / 3.2; display: flex; align-items: center; justify-content: center; padding: 14px 10px 6px; }
+.pc-art svg { width: 100%; height: 100%; transition: transform .25s ease; }
+.pcard:hover .pc-art svg { transform: scale(1.08) rotate(-1.5deg); }
+.pc-tag {
+  position: absolute; top: 10px; left: 10px; font-size: 11px; font-weight: 600; letter-spacing: -.01em;
+  padding: 3px 9px; border-radius: 100px; background: rgba(255,255,255,.88); color: var(--fg-2);
+}
+.pc-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px; flex: 1; justify-content: space-between; }
+.pc-body b { font-size: 14px; font-weight: 600; line-height: 1.4; word-break: keep-all; }
+.pc-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 600;
+  padding: 8px 12px; border-radius: 100px; background: var(--accent-soft); color: var(--accent-text);
+  transition: background .18s, color .18s;
+}
+.pc-cta i { font-style: normal; transition: transform .18s; }
+.pcard:hover .pc-cta { background: var(--accent); color: #fff; }
+.pcard:hover .pc-cta i { transform: translateX(3px); }
+@media (max-width: 720px) {
+  #prod-furn, #prod-light, #prod-fabric, #prod-prop { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+
 /* ── Responsive ── */
 @media (max-width: 720px) {
   .grid2, .grid3, .grid4, .gate-main, .gate-multi-grid { grid-template-columns: 1fr; }
@@ -614,7 +642,7 @@ input[type="time"] {
     <div id="result-capture">
       <div class="box reading-hero">
         <span class="step-label">사주 해석 한 줄</span>
-        <p id="reading" class="reading-big">추진력은 강하지만 마음을 단단히 잡아줄 기운이 부족한 사주예요.</p>
+        <p id="reading" class="reading-big">추진력과 성장 에너지는 만렙! 하지만 마음을 단단하게 잡아줄 금(金) 기운이 부족해 쉽게 흔들릴 수 있어요.</p>
       </div>
       <div class="grid2 result-grid" style="align-items:start; gap:20px;">
         <div class="box">
@@ -652,7 +680,7 @@ input[type="time"] {
   <div class="wrap">
     <span class="step-label">Step 03</span>
     <h2>보완 인테리어 제안 / 상품 추천</h2>
-    <p class="note" style="margin-bottom:28px;">※ 항목을 눌러 펼쳐보세요. 추천 키워드로 오늘의집 검색 결과 페이지가 열려요.</p>
+    <p class="note" style="margin-bottom:28px;">※ 마음에 드는 카드를 눌러보세요. 같은 키워드로 오늘의집 검색 결과가 바로 열려요.</p>
 
     <details open>
       <summary>보완 방향 — 색상 · 소재 · 형태 · 공간 스타일</summary>
@@ -667,7 +695,7 @@ input[type="time"] {
       </div>
     </details>
 
-    <details>
+    <details open>
       <summary>가구</summary>
       <div class="grid4" id="prod-furn"></div>
     </details>
@@ -994,6 +1022,14 @@ if (typeof module !== 'undefined') module.exports = Saju;
     { k: 'water', ko: '수(水)', dir: '북쪽', trait: '지혜와 유연함', lack: '마음을 식혀줄 여유',
       rec: { color: '블랙, 네이비, 딥블루', material: '유리, 거울, 실크 같은 광택 소재', shape: '물결·곡선형, 자유로운 형태', style: '차분한 모노톤 · 시크' } }
   ];
+  // 해석 한 줄용 문구: 강한 기운(S) / 부족한 기운(L) / 적은 편일 때(F)
+  var FUN = {
+    wood:  { s: '추진력과 성장 에너지는 만렙!',     w: '새롭게 시작할 활력을 채워줄', l: '자꾸 망설일 수 있어요.',        f: '시작할 때 필요한 활력을 조금만 더 채워주면 좋아요.' },
+    fire:  { s: '열정과 표현력은 만렙!',           w: '따뜻한 온기를 더해줄', l: '열정이 쉽게 식을 수 있어요.',          f: '열정의 불씨를 조금만 더 지펴주면 좋아요.' },
+    earth: { s: '타고난 안정감과 신뢰감은 만렙!',   w: '중심을 잡아줄', l: '마음이 붕 뜰 수 있어요.',     f: '마음의 중심을 잡아줄 안정감을 조금만 더 채워주면 좋아요.' },
+    metal: { s: '결단력과 원칙은 만렙!',           w: '마음을 단단하게 잡아줄', l: '쉽게 흔들릴 수 있어요.', f: '마음을 단단하게 잡아줄 힘을 조금만 더 채워주면 좋아요.' },
+    water: { s: '지혜와 유연함은 만렙!',           w: '마음을 식혀줄', l: '쉽게 지칠 수 있어요.',          f: '마음의 여유를 조금만 더 채워주면 좋아요.' }
+  };
   var TIME_LABEL = {
     'ja-ya': '자시(야자시)', 'ja-jo': '자시(조자시)', chuk: '축시', 'in': '인시', myo: '묘시', jin: '진시', sa: '사시',
     o: '오시', mi: '미시', sin: '신시', yu: '유시', sul: '술시', hae: '해시'
@@ -1184,21 +1220,109 @@ if (typeof module !== 'undefined') module.exports = Saju;
   };
   var PROD_CAT = { furn: '가구', light: '조명', fabric: '패브릭', prop: '소품' };
   var PROD_COL = { wood: '#5B9A47', fire: '#E2594A', earth: '#C49A5A', metal: '#8A97A6', water: '#2F5E8C' };
-  // 카테고리별 단색 아이콘 (stroke = 오행 색)
-  var PROD_ICON = {
-    furn:   '<rect x="14" y="26" width="36" height="12" rx="3"/><path d="M18 38v14M46 38v14M18 26V14h28v12"/>',
-    light:  '<path d="M32 8v8M20 40c0-10 5-14 12-14s12 4 12 14z"/><path d="M32 40v12M24 54h16"/>',
-    fabric: '<path d="M10 12h44M14 12v40M26 12c0 14-6 26-6 40M38 12c0 14 6 26 6 40M50 12v40"/>',
-    prop:   '<path d="M26 10h12M28 10v8c-8 4-12 10-12 20 0 10 6 16 16 16s16-6 16-16c0-10-4-16-12-20v-8"/>'
+  // ── 상품 카드 일러스트: 상품명 → 그림 종류·색 ──
+  function shade(h, f) {
+    var n = parseInt(h.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255, t = f < 0 ? 0 : 255, q = Math.abs(f);
+    return '#' + [r, g, b].map(function (v) { return ('0' + Math.round((t - v) * q + v).toString(16)).slice(-2); }).join('');
+  }
+  var SH = '<ellipse cx="60" cy="80" rx="40" ry="5" fill="#0F1B2D" opacity=".08"/>';
+  function K(d) { return 'stroke="' + d + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"'; }
+  var ART = {
+    shelf: function (c, d, l) { var k = K(d);
+      return '<rect x="30" y="10" width="5" height="68" fill="' + c + '" ' + k + '/><rect x="85" y="10" width="5" height="68" fill="' + c + '" ' + k + '/>' +
+        '<rect x="30" y="28" width="60" height="5" fill="' + c + '" ' + k + '/><rect x="30" y="50" width="60" height="5" fill="' + c + '" ' + k + '/><rect x="30" y="72" width="60" height="5" fill="' + c + '" ' + k + '/>' +
+        '<rect x="42" y="15" width="12" height="13" rx="2" fill="' + l + '" ' + k + '/><circle cx="72" cy="21" r="7" fill="#7CC36A" ' + k + '/>' +
+        '<rect x="40" y="39" width="22" height="11" rx="1" fill="' + l + '" ' + k + '/><rect x="66" y="35" width="14" height="15" rx="2" fill="' + d + '" opacity=".55"/>'; },
+    cabinet: function (c, d, l) { var k = K(d);
+      return '<rect x="26" y="24" width="68" height="48" rx="4" fill="' + c + '" ' + k + '/><rect x="26" y="24" width="68" height="7" rx="3" fill="' + l + '" ' + k + '/>' +
+        '<path d="M60 31V72" ' + k + '/><circle cx="54" cy="50" r="2.5" fill="' + d + '"/><circle cx="66" cy="50" r="2.5" fill="' + d + '"/>' +
+        '<rect x="32" y="72" width="6" height="8" fill="' + d + '"/><rect x="82" y="72" width="6" height="8" fill="' + d + '"/>'; },
+    table: function (c, d, l) { var k = K(d);
+      return '<path d="M34 44L28 78M86 44L92 78" stroke="' + d + '" stroke-width="4.5" stroke-linecap="round"/><rect x="20" y="36" width="80" height="9" rx="4.5" fill="' + c + '" ' + k + '/>' +
+        '<rect x="50" y="24" width="11" height="12" rx="2" fill="' + l + '" ' + k + '/><path d="M72 36c0-8 2-12 8-14" stroke="#5B9A47" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="82" cy="21" rx="5" ry="3" fill="#7CC36A"/>'; },
+    chair: function (c, d, l) { var k = K(d);
+      return '<path d="M40 56L36 79M82 56L86 79" stroke="' + d + '" stroke-width="4.5" stroke-linecap="round"/><rect x="38" y="10" width="44" height="36" rx="8" fill="' + c + '" ' + k + '/>' +
+        '<rect x="32" y="46" width="56" height="11" rx="5" fill="' + l + '" ' + k + '/><path d="M60 18V38" stroke="' + d + '" stroke-width="2" opacity=".3"/>'; },
+    sofa: function (c, d, l) { var k = K(d);
+      return '<rect x="24" y="20" width="72" height="34" rx="12" fill="' + c + '" ' + k + '/><rect x="24" y="46" width="72" height="20" rx="7" fill="' + l + '" ' + k + '/>' +
+        '<rect x="12" y="36" width="18" height="32" rx="9" fill="' + c + '" ' + k + '/><rect x="90" y="36" width="18" height="32" rx="9" fill="' + c + '" ' + k + '/>' +
+        '<rect x="26" y="68" width="6" height="10" rx="2" fill="' + d + '"/><rect x="88" y="68" width="6" height="10" rx="2" fill="' + d + '"/>' +
+        '<rect x="36" y="28" width="20" height="18" rx="6" fill="' + l + '" ' + k + ' transform="rotate(-8 46 37)"/>'; },
+    mirror: function (c, d, l) { var k = K(d);
+      return '<ellipse cx="60" cy="42" rx="26" ry="37" fill="' + c + '" ' + k + '/><ellipse cx="60" cy="42" rx="20" ry="31" fill="#EAF7FF" ' + k + '/>' +
+        '<path d="M48 26L60 14M46 38L66 18" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>'; },
+    floor: function (c, d, l) { var k = K(d);
+      return '<circle cx="60" cy="30" r="30" fill="#FFE9A8" opacity=".5"/><rect x="58" y="38" width="4" height="36" fill="' + d + '"/><ellipse cx="60" cy="75" rx="15" ry="4.5" fill="' + d + '"/>' +
+        '<path d="M44 12H76L84 40H36Z" fill="' + c + '" ' + k + '/><path d="M50 12L46 40" stroke="' + l + '" stroke-width="3" opacity=".8" stroke-linecap="round"/>'; },
+    pendant: function (c, d, l) { var k = K(d);
+      return '<path d="M60 0V20" stroke="' + d + '" stroke-width="2"/><path d="M42 50H78L96 88H24Z" fill="#FFE9A8" opacity=".4"/>' +
+        '<path d="M32 50Q32 24 60 24Q88 24 88 50Z" fill="' + c + '" ' + k + '/><rect x="55" y="16" width="10" height="9" rx="2" fill="' + d + '"/><circle cx="60" cy="53" r="5" fill="#FFF3C4" ' + k + '/>'; },
+    mood: function (c, d, l) { var k = K(d);
+      return '<circle cx="60" cy="52" r="34" fill="#FFE9A8" opacity=".4"/><rect x="38" y="62" width="44" height="10" rx="4" fill="' + d + '"/>' +
+        '<path d="M40 62Q40 30 60 30Q80 30 80 62Z" fill="' + c + '" ' + k + '/><path d="M48 54Q49 40 57 36" stroke="' + l + '" stroke-width="3" fill="none" stroke-linecap="round"/>'; },
+    candle: function (c, d, l) { var k = K(d);
+      return '<rect x="38" y="46" width="18" height="32" rx="3" fill="' + c + '" ' + k + '/><rect x="64" y="56" width="18" height="22" rx="3" fill="' + l + '" ' + k + '/>' +
+        '<path d="M47 26Q55 38 47 46Q39 38 47 26Z" fill="#FFB547"/><path d="M73 38Q81 48 73 56Q65 48 73 38Z" fill="#FFB547"/><path d="M47 43V46M73 53V56" ' + k + '/>'; },
+    curtain: function (c, d, l) { var k = K(d);
+      return '<rect x="48" y="18" width="24" height="60" fill="#EAF7FF" ' + k + '/><path d="M12 14H108" stroke="' + d + '" stroke-width="4" stroke-linecap="round"/><circle cx="10" cy="14" r="4" fill="' + d + '"/><circle cx="110" cy="14" r="4" fill="' + d + '"/>' +
+        '<path d="M16 17H52Q46 48 52 80H16Z" fill="' + c + '" ' + k + '/><path d="M68 17H104V80H68Q74 48 68 17Z" fill="' + c + '" ' + k + '/>' +
+        '<path d="M26 17V80M36 17V80M80 17V80M90 17V80" stroke="' + d + '" stroke-width="1.5" opacity=".3"/>'; },
+    bedding: function (c, d, l) { var k = K(d);
+      return '<rect x="8" y="20" width="9" height="58" rx="3" fill="' + d + '"/><rect x="12" y="48" width="98" height="20" rx="6" fill="#fff" ' + k + '/>' +
+        '<rect x="30" y="40" width="80" height="28" rx="7" fill="' + c + '" ' + k + '/><path d="M54 40V68M78 40V68" stroke="' + d + '" stroke-width="1.5" opacity=".3"/>' +
+        '<rect x="16" y="34" width="28" height="15" rx="7" fill="' + l + '" ' + k + '/><rect x="104" y="68" width="6" height="10" fill="' + d + '"/><rect x="14" y="68" width="6" height="10" fill="' + d + '"/>'; },
+    cushion: function (c, d, l) { var k = K(d);
+      return '<rect x="22" y="20" width="54" height="48" rx="11" fill="' + l + '" ' + k + ' transform="rotate(-10 49 44)"/>' +
+        '<path d="M32 24Q62 15 92 24Q99 46 92 68Q62 76 32 68Q25 46 32 24Z" fill="' + c + '" ' + k + '/><circle cx="62" cy="46" r="3" fill="' + d + '"/>' +
+        '<path d="M62 46L36 28M62 46L88 28M62 46L36 64M62 46L88 64" stroke="' + d + '" stroke-width="1.5" opacity=".3"/>'; },
+    rug: function (c, d, l) { var k = K(d);
+      return '<path d="M28 30H106L94 68H14Z" fill="' + c + '" ' + k + '/><path d="M36 37H98L89 61H23Z" fill="none" stroke="' + l + '" stroke-width="2" stroke-dasharray="4 3"/>' +
+        '<path d="M60 40L70 49L60 58L50 49Z" fill="' + l + '" ' + k + '/><path d="M14 68L11 74M26 68L24 75M38 68L37 75M50 68L50 75M62 68L62 75M74 68L75 75M86 68L88 75M94 68L98 74" stroke="' + d + '" stroke-width="1.5" stroke-linecap="round"/>'; },
+    plant: function (c, d, l) { var k = K('#2F6B2A');
+      return '<ellipse cx="60" cy="30" rx="9" ry="22" fill="#5B9A47" ' + k + '/><ellipse cx="42" cy="38" rx="8" ry="19" fill="#6DB058" ' + k + ' transform="rotate(-32 42 38)"/><ellipse cx="78" cy="38" rx="8" ry="19" fill="#6DB058" ' + k + ' transform="rotate(32 78 38)"/>' +
+        '<path d="M38 56H82L75 79H45Z" fill="' + c + '" ' + K(d) + '/><rect x="35" y="51" width="50" height="8" rx="3" fill="' + l + '" ' + K(d) + '/>'; },
+    frame: function (c, d, l) { var k = K(d);
+      return '<rect x="28" y="12" width="64" height="64" rx="3" fill="' + c + '" ' + k + '/><rect x="36" y="20" width="48" height="48" fill="#fff" ' + k + '/>' +
+        '<circle cx="54" cy="35" r="6" fill="#FFC857"/><path d="M36 68L56 46L67 58L74 51L84 68Z" fill="#7CC36A" ' + k + '/>'; },
+    tray: function (c, d, l) { var k = K(d);
+      return '<path d="M16 54Q18 70 34 70H86Q102 70 104 54Z" fill="' + c + '" ' + k + '/><ellipse cx="60" cy="54" rx="44" ry="11" fill="' + l + '" ' + k + '/>' +
+        '<rect x="46" y="34" width="13" height="17" rx="3" fill="#fff" ' + k + '/><circle cx="78" cy="47" r="7" fill="' + c + '" ' + k + '/><path d="M59 40H65Q66 46 59 47" ' + k + ' fill="none"/>'; },
+    vase: function (c, d, l) { var k = K(d);
+      return '<path d="M56 26C54 14 48 10 42 6M60 26V4M64 26C66 14 72 10 78 8" stroke="#4E9A3C" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="42" cy="6" r="5" fill="#FF8FA3"/><circle cx="60" cy="4" r="5" fill="#FFC857"/><circle cx="78" cy="8" r="5" fill="#FF8FA3"/>' +
+        '<path d="M50 26H70Q68 36 77 48Q86 62 70 77H50Q34 62 43 48Q52 36 50 26Z" fill="' + c + '" ' + k + '/><path d="M50 50Q46 60 52 70" stroke="' + l + '" stroke-width="3" fill="none" stroke-linecap="round"/>'; },
+    diffuser: function (c, d, l) { var k = K(d);
+      return '<path d="M60 32L46 6M60 32L60 3M60 32L74 8" stroke="#C9A35E" stroke-width="2.5" stroke-linecap="round"/><rect x="54" y="32" width="12" height="9" rx="2" fill="' + d + '"/>' +
+        '<path d="M46 41H74V72Q74 79 67 79H53Q46 79 46 72Z" fill="' + c + '" ' + k + '/><rect x="51" y="52" width="18" height="14" rx="2" fill="#fff" opacity=".8"/>'; },
+    object: function (c, d, l) { var k = K(d);
+      return '<path d="M26 78V50Q26 28 46 28Q66 28 66 50V78Z" fill="' + c + '" ' + k + '/><circle cx="84" cy="62" r="15" fill="' + l + '" ' + k + '/><circle cx="84" cy="36" r="8" fill="' + d + '"/>' +
+        '<path d="M34 78V54Q34 40 46 38" stroke="' + l + '" stroke-width="3" fill="none" stroke-linecap="round"/>'; },
+    fish: function (c, d, l) { var k = K(d);
+      return '<path d="M26 40H94A34 34 0 0 1 26 40Z" fill="#9ED8F5" ' + k + '/><path d="M26 40C26 20 40 10 60 10S94 20 94 40" fill="#EAF7FF" opacity=".7" ' + k + '/>' +
+        '<ellipse cx="56" cy="54" rx="10" ry="6" fill="' + c + '" ' + k + '/><path d="M66 54L76 47V61Z" fill="' + c + '" ' + k + '/><circle cx="50" cy="52" r="1.6" fill="' + d + '"/><circle cx="76" cy="36" r="2.5" fill="#fff"/><circle cx="82" cy="30" r="1.8" fill="#fff"/>' +
+        '<ellipse cx="60" cy="78" rx="24" ry="4" fill="' + d + '"/>'; },
+    rack: function (c, d, l) { var k = K(d);
+      return '<path d="M18 20H102M22 20V78M98 20V78M12 78H32M88 78H108" ' + k + ' stroke-width="3.5" fill="none"/>' +
+        '<rect x="32" y="26" width="18" height="36" rx="3" fill="' + c + '" ' + k + '/><rect x="55" y="26" width="18" height="44" rx="3" fill="' + l + '" ' + k + '/><rect x="78" y="26" width="14" height="30" rx="3" fill="' + shade(c, -.15) + '" ' + k + '/>'; }
   };
+  var KIND = [['rack', /행거/], ['fish', /어항|수조/], ['diffuser', /디퓨저/], ['candle', /캔들|향초/], ['frame', /액자/], ['plant', /화분|식물/], ['tray', /트레이/], ['vase', /화병/], ['object', /오브제/],
+    ['curtain', /커튼/], ['bedding', /침구|블랭킷/], ['cushion', /쿠션/], ['rug', /러그/], ['sofa', /소파/], ['chair', /의자|체어|스툴/], ['table', /테이블/], ['mirror', /거울/],
+    ['cabinet', /수납장/], ['shelf', /선반/], ['pendant', /펜던트|원형 조명|한지 조명/], ['mood', /무드등/], ['floor', /스탠드|플로어|조명/]];
+  var KIND_DEFAULT = { furn: 'table', light: 'floor', fabric: 'cushion', prop: 'object' };
+  var NAME_COLOR = [[/올리브/, '#8A9A5B'], [/그린/, '#5B9A47'], [/레드/, '#E2594A'], [/코랄/, '#F4846F'], [/오렌지/, '#F28C4B'], [/테라코타/, '#C1693F'], [/카멜/, '#C49A5A'], [/베이지/, '#D9C3A0'],
+    [/황토/, '#C9A35E'], [/어스톤/, '#B8956A'], [/블랙/, '#2A2A33'], [/네이비/, '#1F3A64'], [/딥블루/, '#2F5E8C'], [/실버/, '#C0C6CE'], [/골드/, '#D4AF37'], [/화이트/, '#F4F6F8'], [/그레이/, '#9AA3AE'],
+    [/원목|우드|나무|라탄/, '#B07D52'], [/리넨|내추럴/, '#D8CBB0'], [/유리/, '#BFE3F2'], [/도자기|세라믹/, '#EDE6D8'], [/스틸|메탈/, '#AEB6C0'], [/실크/, '#7E94B8'], [/한지/, '#F1E6CC'], [/극세사/, '#E7B7A4'], [/웜/, '#E8A66B']];
+  function kindOf(name, cat) { for (var i = 0; i < KIND.length; i++) if (KIND[i][1].test(name)) return KIND[i][0]; return KIND_DEFAULT[cat]; }
+  function colorOf(name) { for (var i = 0; i < NAME_COLOR.length; i++) if (NAME_COLOR[i][0].test(name)) return NAME_COLOR[i][1]; return null; }
+
   function renderProducts(idx) {
     var e = EL[idx], col = PROD_COL[e.k];
-    Object.keys(PROD_CAT).forEach(function (c) {
-      $('prod-' + c).innerHTML = PROD[e.k][c].map(function (q) {
-        return '<div class="product-card"><div class="ph sq" style="background:' + col + '1A; border-radius:0;">' +
-          '<svg viewBox="0 0 64 64" width="56%" height="56%" fill="none" stroke="' + col + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + PROD_ICON[c] + '</svg></div>' +
-          '<div class="meta">' + esc(q) + '<br><span style="color:var(--fg-3);">' + e.ko + ' 보완 · ' + PROD_CAT[c] + '</span><br>' +
-          '<a href="' + OHOU + encodeURIComponent(q) + '" target="_blank" rel="noopener noreferrer">오늘의집에서 보기 →</a></div></div>';
+    Object.keys(PROD_CAT).forEach(function (cat) {
+      $('prod-' + cat).innerHTML = PROD[e.k][cat].map(function (q) {
+        var kind = kindOf(q, cat), c = colorOf(q) || (kind === 'plant' ? '#C1693F' : col);
+        return '<a class="pcard" href="' + OHOU + encodeURIComponent(q) + '" target="_blank" rel="noopener noreferrer">' +
+          '<div class="pc-art" style="background:linear-gradient(160deg,' + col + '33,' + col + '0D)"><span class="pc-tag">' + e.ko + ' 보완</span>' +
+          '<svg viewBox="0 0 120 90" aria-hidden="true">' + (kind === 'pendant' ? '' : SH) + ART[kind](c, shade(c, -.45), shade(c, .6)) + '</svg></div>' +
+          '<div class="pc-body"><b>' + esc(q) + '</b><span class="pc-cta">오늘의집에서 보기<i>→</i></span></div></a>';
       }).join('');
     });
   }
@@ -1223,9 +1347,7 @@ if (typeof module !== 'undefined') module.exports = Saju;
   function renderReading(res, loc) {
     var pct = res.pct, lk = pickLack(pct), strong = pickStrong(pct, lk.idx);
     var L = EL[lk.idx], S = EL[strong], dm = EL[Saju.STEM_EL[res.dayMaster]];
-    var dmName = Saju.STEM_KO[res.dayMaster] + '(' + Saju.STEM_HJ[res.dayMaster] + ')';
-    $('reading').textContent = '일간 ' + dmName + ' ' + dm.ko.slice(0, 1) + '인 사주예요. ' + S.ko.slice(0, 1) + ' 기운(' + S.trait + ')은 강하고, ' +
-      L.ko.slice(0, 1) + ' 기운(' + L.lack + ')은 ' + (lk.min < MIN_SHOW ? '부족해요.' : '상대적으로 적은 편이에요.');
+        $('reading').textContent = FUN[S.k].s + ' 하지만 ' + (lk.min < MIN_SHOW ? FUN[L.k].w + ' ' + L.ko + ' 기운이 부족해 ' + FUN[L.k].l : L.ko + ' 기운이 적은 편이에요. ' + FUN[L.k].f);
     $('lack-chips').innerHTML = lk.list.map(function (i) {
       return '<span class="chip chip-' + EL[i].k + '" style="font-size:14px; padding:5px 14px;">' + EL[i].ko + ' ' + pct[i] + '%</span>';
     }).join('');
@@ -1381,7 +1503,8 @@ if (typeof module !== 'undefined') module.exports = Saju;
     renderReading(agg, loc);
     if (people.length > 1) {
       var LL = EL[pickLack(pct).idx];
-      $('reading').textContent = '함께 사는 ' + people.length + '명의 오행을 합쳐 보면 ' + LL.ko.slice(0, 1) + ' 기운(' + LL.lack + ')이 가장 적어요. 공간으로 함께 채워보세요.';
+      var SS = EL[pickStrong(pct, pickLack(pct).idx)];
+      $('reading').textContent = '우리 ' + people.length + '명이 모이면 ' + FUN[SS.k].s + ' 다만 ' + LL.ko.slice(0, 1) + '(' + ['木', '火', '土', '金', '水'][pickLack(pct).idx] + ') 기운이 가장 적어서, 집에서 함께 채워주면 딱이에요!';
     }
 
     $('pillars-title').textContent = people.length > 1 ? '구성원별 사주 원국' : '나의 사주 원국';
